@@ -11,11 +11,11 @@ class QueryBuilder<T> {
 
   search(searchableFields: string[]) {
     const search = this?.query?.search || '';
-    this.modelQuery = this.modelQuery.find({
-      $or: searchableFields.map((field: any) => ({
-        [field]: { $regex: search, $options: 'i' },
-      })),
-    } as FilterQuery<T>);
+      this.modelQuery = this.modelQuery.find({
+        $or: searchableFields.map((field) => ({
+          [field]: { $regex: search, $options: 'i' },
+        })),
+      } as FilterQuery<T>);
     return this;
   }
 

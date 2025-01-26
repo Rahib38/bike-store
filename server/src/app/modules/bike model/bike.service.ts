@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/querybuilders';
 import { Bike } from './bike.interface';
 import { BikeModel } from './bike.model';
 
@@ -6,23 +7,19 @@ const createBikeIntoDB = async (bike: Bike) => {
   return result;
 };
 
-const getBikeIntoDB = async (searchTerm: string) => {
-  let filter = {};
-  const regex = new RegExp(searchTerm as string, 'i');
-  filter = {
-    $or: [
-      {
-        name: regex,
-      },
-      {
-        brand: regex,
-      },
-      {
-        category: regex,
-      },
-    ],
-  };
-  const result = await BikeModel.find(filter);
+const getBikeIntoDB = async (query: Record<string, unknown>) => {
+  const searchableFields = ['name', 'brand', 'category'];
+  console.log(searchableFields)
+  const bikes =new QueryBuilder(BikeModel.find(), query)
+    .search(searchableFields)
+    .filter()
+    .sort();
+  // const bikes=await BikeModel.find()
+  console.log(bikes);
+
+  const result = await bikes.modelQuery
+  console.log('Direct Query Result:', result);
+
   return result;
 };
 
