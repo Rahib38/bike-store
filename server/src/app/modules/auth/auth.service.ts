@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import config from '../../config';
 
 const register = async (payload: TUser) => {
+  
   const result = (await User.create(payload));
   return result;
 };

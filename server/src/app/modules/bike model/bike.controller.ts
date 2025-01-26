@@ -27,65 +27,38 @@ const getAllBike = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const singleGetBike = async (req: Request, res: Response) => {
-  try {
-    console.log(req.params);
-    const productId = req.params.productId;
-    const result = await BikeService.singleBikeIntoDB(productId);
-    res.status(200).json({
-      success: true,
-      message: 'bike are retrived successfully',
-      data: result,
-    });
-  } catch (error: any) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: 'something went wrong',
-      error: error,
-      stack: error?.stack,
-    });
-  }
-};
-const updateBike = async (req: Request, res: Response) => {
-  try {
-    const productId = req.params.productId;
-    console.log(req.params);
-    const body = req.body;
-    const result = await BikeService.updateBikeIntoDB(productId, body);
-    res.status(200).json({
-      success: true,
-      message: 'bike are retrived successfully',
-      data: result,
-    });
-  } catch (error: any) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: 'something went wrong',
-      error: error,
-      stack: error?.stack,
-    });
-  }
-};
+const singleGetBike =catchAsync( async (req: Request, res: Response) => {
+  const productId = req.params.productId;
+  const result = await BikeService.singleBikeIntoDB(productId);
+  sendResponse(res, {
+    success: true,
+    message: 'Bike retrieved successfully',
+    statusCode: StatusCodes.OK,
+    data: result,
+  });
+});
+const updateBike =catchAsync( async (req: Request, res: Response) => {
+  const productId = req.params.productId;
+  console.log(req.params);
+  const body = req.body;
+  const result = await BikeService.updateBikeIntoDB(productId, body);
+  sendResponse(res, {
+    success: true,
+    message: 'Bike update successfully',
+    statusCode: StatusCodes.OK,
+    data: result,
+  });
+
+});
 const deleteBike = async (req: Request, res: Response) => {
-  try {
-    const productId = req.params.productId;
-    await BikeService.deleteBikeIntoDB(productId);
-    res.status(200).json({
-      success: true,
-      message: 'bike are retrived successfully',
-      result: {},
-    });
-  } catch (error: any) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: 'something went wrong',
-      error: error,
-      stack: error?.stack,
-    });
-  }
+  const productId = req.params.productId;
+ const result= await BikeService.deleteBikeIntoDB(productId);
+  sendResponse(res, {
+    success: true,
+    message: 'Bike deleted successfully',
+    statusCode: StatusCodes.OK,
+    data: result
+  });
 };
 
 export const bikeController = {

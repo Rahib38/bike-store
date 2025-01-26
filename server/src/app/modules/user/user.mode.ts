@@ -23,7 +23,7 @@ const userSchema = new Schema<TUser>(
     role: {
       type: String,
       enum: ['user', 'admin'],
-      default: 'user',
+      // default: 'user',
     },
     isBlocked: {
       type: Boolean,

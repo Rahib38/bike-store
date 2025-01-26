@@ -5,14 +5,16 @@ import sendResponse from '../../utils/sendResponse';
 import { AuthService } from './auth.service';
 
 const register = catchAsync(async (req: Request, res: Response) => {
+   req.body.role= req.body.role || "user"; // Set default if not provided
   const result = await AuthService.register(req.body);
-  const { _id, name, email } = result;
+
+  // const { _id, name, email } = result;
 
   sendResponse(res, {
     success: true,
     message: 'User register successfully',
     statusCode: StatusCodes.CREATED,
-    data: { _id, name, email },
+    data: result,
   });
 });
 const login = catchAsync(async (req: Request, res: Response) => {
