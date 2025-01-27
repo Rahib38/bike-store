@@ -5,9 +5,9 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AuthService } from './auth.service';
+import config from '../../config';
 
 const register = catchAsync(async (req: Request, res: Response) => {
-  req.body.role = req.body.role || 'user'; // Set default if not provided
   const result = await AuthService.register(req.body);
 
   // const { _id, name, email } = result;
@@ -21,12 +21,20 @@ const register = catchAsync(async (req: Request, res: Response) => {
 });
 const login = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.login(req.body);
+  const { refreshToken } = result;
+
+  // set refresh token in cookies
+  res.cookie('refreshToken', refreshToken, {
+    secure: config.NODE_ENV === 'production',
+    httpOnly: true,
+  });
+
   sendResponse(res, {
     success: true,
     message: 'Login successful',
     statusCode: StatusCodes.OK,
     data: {
-      token: result.token,
+      token: result.accessToken,
     },
   });
 });
