@@ -7,7 +7,14 @@ const loginValidationSchema = z.object({
     password: z.string({ required_error: 'Password is required' }),
   }),
 });
-export const AuthValiditon={
-    loginValidationSchema
-}
-export type TUserRole = keyof typeof USER_ROLE
+
+const refreshTokenValidationSchema = z.object({
+  cookies: z.object({
+    refreshToken: z.string({ required_error: 'Refresh token is required' }),
+  }),
+});
+export const AuthValiditon = {
+  loginValidationSchema,
+  refreshTokenValidationSchema
+};
+export type TUserRole = keyof typeof USER_ROLE;
