@@ -30,7 +30,7 @@ const login = async (payload: { email: string; password: string }) => {
   if (userStatus) {
     throw new Error('This user is blocked!');
   }
-  console.log(payload, payload?.password, user?.password);
+  // console.log(payload, payload?.password, user?.password);
   const isPasswordMatched = await bcrypt.compare(
     payload?.password,
     user?.password,
