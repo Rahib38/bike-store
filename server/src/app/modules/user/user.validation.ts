@@ -8,7 +8,7 @@ const userValidationSchema = z.object({
       .string({ required_error: 'Password must be provided' })
       .max(20, { message: 'Password can not be more than 20 character' }),
   }),
-  role:z.enum(['user', 'admin',]).default('user'),
+  role:z.enum(['customer', 'admin',]).default('customer'),
   isBlocked: z.boolean().default(false).refine((val) => typeof val === "boolean", {
     message: "isBlocked must be a boolean value",
   }),
