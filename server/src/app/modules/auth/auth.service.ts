@@ -65,6 +65,41 @@ const login = async (payload: { email: string; password: string }) => {
   // return {token, user};
 };
 
+const singleUser = async (_id: string) => {
+  console.log(_id,"kemon achen")
+  const result = await User.findById(_id);
+  console.log(result,"bugicugi")
+  return result;
+};
+const resetPassword = async (
+  payload: { oldPassword: string; newPassword: string },
+  userData: JwtPayload,
+) => {
+  const userId = userData._id;
+  const user = await User.findById(userId).select('+password');
+  const ispassMatched = await bcrypt.compare(
+    payload?.oldPassword,
+    user?.password as string,
+  );
+
+  if (!ispassMatched) {
+    throw new AppError(
+      StatusCodes.BAD_REQUEST,
+      'please enter current password.',
+    );
+  }
+
+  const newPassword = await bcrypt.hash(payload?.newPassword, 8);
+
+  const result = await User.findByIdAndUpdate(
+    { _id: user?.id },
+    { password: newPassword },
+    { new: true },
+  );
+
+  return result;
+};
+
 const refreshToken = async (token: string, res: Response) => {
   let decoded;
   try {
@@ -107,4 +142,6 @@ export const AuthService = {
   register,
   login,
   refreshToken,
+  resetPassword,
+  singleUser,
 };

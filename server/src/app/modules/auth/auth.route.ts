@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import { userValidation } from '../user/user.validation';
 import { AuthValiditon } from './auth.Validation';
@@ -16,10 +17,21 @@ authRouter.post(
   validateRequest(AuthValiditon.loginValidationSchema),
   AuthController.login,
 );
+authRouter.get(
+  '/user/:id',
+
+  AuthController.singleUser,
+);
 authRouter.post(
   '/refresh-token',
   validateRequest(AuthValiditon.refreshTokenValidationSchema),
   AuthController.refreshToken,
+);
+
+authRouter.patch(
+  '/change-password',
+  auth('admin', 'customer'),
+  AuthController.resetPassword,
 );
 authRouter.post('/logout', AuthController.logOut);
 export default authRouter;

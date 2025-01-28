@@ -6,6 +6,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AuthService } from './auth.service';
 import config from '../../config';
+import { JwtPayload } from 'jsonwebtoken';
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.register(req.body);
@@ -39,6 +40,35 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+const singleUser=catchAsync(async(req:Request,res:Response)=>{
+  const id=req.params.id
+  console.log(id,"sonamia")
+  const result=await AuthService.singleUser(id)
+  console.log(result,'from controller')
+  sendResponse(res, {
+    success: true,
+    message: 'single user get successfully',
+    statusCode: StatusCodes.OK,
+    data:result
+  });
+})
+
+const resetPassword=catchAsync(async(req:Request,res:Response)=>{
+  const body=req.body
+  const user=req.user
+  await AuthService.resetPassword(body,user as JwtPayload)
+  sendResponse(res, {
+    success: true,
+    message: 'password change successfully',
+    statusCode: StatusCodes.OK,
+    data:null
+  });
+
+})
+
+
+
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
   const result = await AuthService.refreshToken(refreshToken, res);
@@ -65,5 +95,6 @@ export const AuthController = {
   register,
   login,
   refreshToken,
-  logOut,
+  logOut,singleUser,
+  resetPassword
 };

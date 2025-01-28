@@ -29,6 +29,7 @@ const getAllBike = catchAsync(async (req: Request, res: Response) => {
 
 const singleGetBike =catchAsync( async (req: Request, res: Response) => {
   const productId = req.params.productId;
+  console.log(productId)
   const result = await BikeService.singleBikeIntoDB(productId);
   sendResponse(res, {
     success: true,
