@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="container mx-auto">
+      <div className="">
       <Outlet></Outlet>
       </div>
 
