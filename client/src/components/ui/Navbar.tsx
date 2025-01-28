@@ -1,22 +1,42 @@
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
+  // const[user]=useUserQuery(undefined)
+  // const [logout]=useLogoutMutation()
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false); // To toggle logout button
   const handleAvatarClick = () => {
     setIsMenuVisible((prev) => !prev); // Toggle visibility of the logout button
   };
-    // State to track if the user is logged in
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // State to track if the user is logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // Function to toggle login state
-    const handleLogin = () => {
-      setIsLoggedIn(true); // Simulate login
-    };
-  
-    const handleLogout = () => {
-      setIsLoggedIn(false); // Simulate logout
-    };
+  // Function to toggle login state
+  const handleLogin = () => {
+    setIsLoggedIn(true); // Simulate login
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(true); // Simulate logout
+  };
+
+  // const navlinks = (
+  //   <>
+  //     <li>
+  //       <NavLink to="/"> Home</NavLink>
+  //     </li>
+  //     <li>
+  //       <NavLink to="/art&craft">All Products Page</NavLink>
+  //     </li>
+  //     <li>
+  //       <NavLink to="/addcraft"> About</NavLink>
+  //     </li>
+  //     <li>
+  //       <NavLink to="/myArt&Craft">My Art&Craft List</NavLink>
+  //     </li>
+  //   </>
+  // );
 
   return (
     <>
@@ -37,28 +57,11 @@ export default function Navbar() {
               className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
               href="javascript:void(0)"
             >
-              <svg
-                width="300"
-                height="300"
-                viewBox="0 0 300 300"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 bg-emerald-500"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M88.1121 88.1134L150.026 150.027L150.027 150.027L150.027 150.027L150.028 150.027L150.027 150.026L88.1133 88.1122L88.1121 88.1134ZM273.878 273.877C272.038 274.974 196.128 319.957 165.52 289.349L88.1124 211.942L26.1434 273.911C26.1434 273.911 -20.3337 196.504 10.651 165.519L88.1121 88.1134L26.1417 26.1433C26.1417 26.1433 69.6778 0.00338007 104.519 0H0V300H300V0H104.533C116.144 0.00112664 126.789 2.90631 134.534 10.651L211.941 88.1123L273.877 26.177C274.974 28.0159 319.957 103.926 289.349 134.535L211.942 211.942L273.878 273.877ZM273.878 273.877L273.912 273.857V273.911L273.878 273.877ZM273.877 26.177L273.911 26.1429H273.857C273.857 26.1429 273.863 26.1544 273.877 26.177Z"
-                  fill="white"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M0 0H300V300H0V0ZM150.026 150.025C121.715 99.731 88.1131 88.1122 88.1131 88.1122L10.6508 165.519C10.6508 165.519 26.143 150.027 150.026 150.027H150.027C150.026 150.027 150.026 150.027 150.026 150.027L150.026 150.027C99.731 178.339 88.1124 211.941 88.1124 211.941L165.52 289.348C165.52 289.348 150.032 273.86 150.027 150.027H150.029C178.341 200.323 211.944 211.942 211.944 211.942L289.352 134.535C289.352 134.535 273.864 150.023 150.027 150.027V150.027L150.027 150.027C200.322 121.715 211.941 88.1125 211.941 88.1125L134.534 10.651C134.534 10.651 150.026 26.1431 150.026 150.025ZM150.027 150.027L150.026 150.027C150.026 150.026 150.026 150.026 150.026 150.025C150.026 150.025 150.027 150.026 150.027 150.027ZM150.027 150.027L150.027 150.026L150.027 150.027C150.027 150.027 150.027 150.027 150.027 150.027L150.027 150.027ZM150.027 150.027C150.027 150.027 150.027 150.027 150.027 150.027H150.027L150.027 150.027Z"
-                  fill="rgba(255,255,255,.2)"
-                />
-              </svg>
-              Brand
+              <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
+                <img src="https://svgsilh.com/svg_v2/158940.svg" alt="" />
+              </a>
+              <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
+              <span className="lg:text-3xl font-semibold">Wheels</span>
             </a>
             {/*      <!-- Mobile trigger --> */}
             <button
@@ -105,7 +108,9 @@ export default function Navbar() {
                   className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
                   href="javascript:void(0)"
                 >
-                  <span>Blog</span>
+                  <span>
+                    <NavLink to={"/"}>Home</NavLink>
+                  </span>
                 </a>
               </li>
               <li role="none" className="flex items-stretch">
@@ -113,10 +118,12 @@ export default function Navbar() {
                   role="menuitem"
                   aria-current="page"
                   aria-haspopup="false"
-                  className="flex items-center gap-2 py-4 text-emerald-500 transition-colors duration-300 hover:text-emerald-600 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
+                  className="flex items-center gap-2 py-4  transition-colors duration-300 hover:text-emerald-600 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
                   href="javascript:void(0)"
                 >
-                  <span>Planning</span>
+                  <span>
+                    <NavLink to={"/allProduct"}>All Products Page</NavLink>
+                  </span>
                 </a>
               </li>
               <li role="none" className="flex items-stretch">
@@ -126,14 +133,15 @@ export default function Navbar() {
                   className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
                   href="javascript:void(0)"
                 >
-                  <span>About me</span>
+                  <span>
+                    <NavLink to={"/about"}>About</NavLink>{" "}
+                  </span>
                 </a>
               </li>
             </ul>
             <div className="ml-auto flex items-center px-6 lg:ml-0 lg:p-0">
               {/*        <!-- Avatar --> */}
               {/* <a
-                href="#"
                 className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white"
               >
                 <img
@@ -148,56 +156,51 @@ export default function Navbar() {
                   <span className="sr-only"> 7 new emails </span>
                 </span>
               </a> */}
- <div className="flex items-center justify-center min-h-screen">
-      {/* Conditional rendering based on login state */}
-      {!isLoggedIn ? (
-        // Login Button
-        <button
-          onClick={handleLogin}
-          className="focus:text-emerald-600 bg-emerald-500 text-white  py-2 px-4 rounded"
-        >
-          Login
-        </button>
-      ) : (
-        // Avatar with notifications
-        <div className="relative">
-          <a
-          onClick={handleAvatarClick}
-            href="#"
-            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white"
-          >
-            <img
-              src="https://i.pravatar.cc/40?img=35"
-              alt="user name"
-              title="user name"
-              width="40"
-              height="40"
-              className="max-w-full rounded-full"
-            />
-            {/* Notification Badge */}
-            {/* <span className="absolute bottom-0 right-0 inline-flex items-center justify-center gap-1 rounded-full border-2 border-white bg-pink-500 p-1 text-xs text-white rounded-full">
+              <div className="flex items-center justify-center min-h-screen">
+                {/* Conditional rendering based on login state */}
+                {isLoggedIn ? (
+                  // Login Button
+                  <button
+                    onClick={handleLogin}
+                    className="focus:text-emerald-600 bg-emerald-500 text-white  py-2 px-4 rounded"
+                  >
+                    <Link to="/login">Login</Link>
+                  </button>
+                ) : (
+                  // Avatar with notifications
+                  <div className="relative">
+                    <a
+                      onClick={handleAvatarClick}
+                      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white"
+                    >
+                      <img
+                        src="https://i.pravatar.cc/40?img=35"
+                        alt="user name"
+                        title="user name"
+                        width="40"
+                        height="40"
+                        className="max-w-full rounded-full"
+                      />
+                      {/* Notification Badge */}
+                      {/* <span className="absolute bottom-0 right-0 inline-flex items-center justify-center gap-1 rounded-full border-2 border-white bg-pink-500 p-1 text-xs text-white rounded-full">
               <span className="sr-only">7 new emails</span>
               7
             </span> */}
-            
-          </a>
+                    </a>
 
-          {/* Logout Button */}
-          {isMenuVisible && (
-            <button
-              onClick={handleLogout}
-              className="absolute top-12 left-0 bg-gray-700 hover:bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg"
-            >
-              Logout
-            </button>
-          )}
-        </div>
-      )}
-    </div>
+                    {/* Logout Button */}
+                    {isMenuVisible && (
+                      <button
+                        onClick={handleLogout}
+                        className="absolute top-12 left-0 bg-gray-700 hover:bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg"
+                      >
+                        Logout
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
 
-
-
-              
               {/*        <!-- End Avatar --> */}
             </div>
           </nav>
