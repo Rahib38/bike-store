@@ -1,10 +1,16 @@
-import { Button } from "./components/ui/button";
+import { Outlet } from "react-router-dom";
+import Footer from "./components/ui/Footer";
+import Navbar from "./components/ui/Navbar";
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline text-red-500">Hello world!</h1>
-      <Button>Click me rakib vaike</Button>
+      <Navbar></Navbar>
+      <div className="container mx-auto">
+      <Outlet></Outlet>
+      </div>
+
+      <Footer></Footer>
     </>
   );
 }

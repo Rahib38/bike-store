@@ -3,11 +3,17 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import router from './route/rotuer'
+import { Provider } from 'react-redux'
+import { store } from './Redux/store'
+import { Toaster } from 'sonner'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router}>
+    <Provider store={store}>
 
-    </RouterProvider>
+    <RouterProvider router={router}/>
+
+<Toaster/>
+    </Provider>
   </StrictMode>,
 )
