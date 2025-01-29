@@ -1,24 +1,35 @@
-import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
+import { FaCartPlus } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
-
 export default function Navbar() {
   // const[user]=useUserQuery(undefined)
   // const [logout]=useLogoutMutation()
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-  const [isMenuVisible, setIsMenuVisible] = useState(false); // To toggle logout button
-  const handleAvatarClick = () => {
-    setIsMenuVisible((prev) => !prev); // Toggle visibility of the logout button
-  };
-  // State to track if the user is logged in
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Function to toggle login state
+  // Check login state from localStorage on component mount
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem("isLoggedIn");
+    if (loggedInStatus === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleLogin = () => {
-    setIsLoggedIn(true); // Simulate login
+    setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", "true"); // Persist login state
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(true); // Simulate logout
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn"); // Remove login state
   };
 
   // const navlinks = (
@@ -109,7 +120,16 @@ export default function Navbar() {
                   href="javascript:void(0)"
                 >
                   <span>
-                    <NavLink to={"/"}>Home</NavLink>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-emerald-500 underline decoration-2 underline-offset-4"
+                          : "text-slate-700 hover:text-emerald-500"
+                      }
+                      to={"/"}
+                    >
+                      Home
+                    </NavLink>
                   </span>
                 </a>
               </li>
@@ -122,7 +142,16 @@ export default function Navbar() {
                   href="javascript:void(0)"
                 >
                   <span>
-                    <NavLink to={"/allProduct"}>All Products Page</NavLink>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-emerald-500 underline decoration-2 underline-offset-4"
+                          : "text-slate-700 hover:text-emerald-500"
+                      }
+                      to={"/allProduct"}
+                    >
+                      All Products Page
+                    </NavLink>
                   </span>
                 </a>
               </li>
@@ -134,74 +163,110 @@ export default function Navbar() {
                   href="javascript:void(0)"
                 >
                   <span>
-                    <NavLink to={"/about"}>About</NavLink>{" "}
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-emerald-500 underline decoration-2 underline-offset-4"
+                          : "text-slate-700 hover:text-emerald-500"
+                      }
+                      to={"/about"}
+                    >
+                      About
+                    </NavLink>
                   </span>
                 </a>
               </li>
+              <li role="none" className="flex items-stretch">
+                <a
+                  role="menuitem"
+                  aria-haspopup="false"
+                  className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
+                  href="javascript:void(0)"
+                >
+                  <span>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-emerald-500 underline decoration-2 underline-offset-4"
+                          : "text-slate-700 hover:text-emerald-500"
+                      }
+                      to={"/service"}
+                    >
+                      Service
+                    </NavLink>
+                  </span>
+            
+                </a>
+              </li>
+              <li role="none" className="flex items-stretch">
+                <a
+                  role="menuitem"
+                  aria-haspopup="false"
+                  className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"
+                  href="javascript:void(0)"
+                >
+                  <span>
+                  <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "text-emerald-500 underline decoration-2 underline-offset-4"
+                          : "text-slate-700 hover:text-emerald-500"
+                      }
+                      to={"/cart"}
+                    >
+                    <FaCartPlus />
+                    </NavLink>
+                  </span>
+            
+                </a>
+              </li>
             </ul>
+
             <div className="ml-auto flex items-center px-6 lg:ml-0 lg:p-0">
-              {/*        <!-- Avatar --> */}
-              {/* <a
-                className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white"
-              >
-                <img
-                  src="https://i.pravatar.cc/40?img=35"
-                  alt="user name"
-                  title="user name"
-                  width="40"
-                  height="40"
-                  className="max-w-full rounded-full"
-                />
-                <span className="absolute bottom-0 right-0 inline-flex items-center justify-center gap-1 rounded-full border-2 border-white bg-pink-500 p-1 text-sm text-white">
-                  <span className="sr-only"> 7 new emails </span>
-                </span>
-              </a> */}
               <div className="flex items-center justify-center min-h-screen">
-                {/* Conditional rendering based on login state */}
                 {isLoggedIn ? (
+                  // Avatar with dropdown menu
+                  <div className="relative">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white">
+                          <img
+                            src="https://i.pravatar.cc/40?img=35"
+                            alt="user name"
+                            title="user name"
+                            width="40"
+                            height="40"
+                            className="max-w-full rounded-full"
+                          />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-44">
+                        <DropdownMenuItem>
+                          <Link to="/dashboard" className="w-full">
+                            Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link to="/profile" className="w-full">
+                            User Profile
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogout}>
+                          Logout
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ) : (
                   // Login Button
                   <button
                     onClick={handleLogin}
-                    className="focus:text-emerald-600 bg-emerald-500 text-white  py-2 px-4 rounded"
+                    className="focus:text-emerald-600 bg-emerald-500 text-white py-2 px-4 rounded"
                   >
                     <Link to="/login">Login</Link>
                   </button>
-                ) : (
-                  // Avatar with notifications
-                  <div className="relative">
-                    <a
-                      onClick={handleAvatarClick}
-                      className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white"
-                    >
-                      <img
-                        src="https://i.pravatar.cc/40?img=35"
-                        alt="user name"
-                        title="user name"
-                        width="40"
-                        height="40"
-                        className="max-w-full rounded-full"
-                      />
-                      {/* Notification Badge */}
-                      {/* <span className="absolute bottom-0 right-0 inline-flex items-center justify-center gap-1 rounded-full border-2 border-white bg-pink-500 p-1 text-xs text-white rounded-full">
-              <span className="sr-only">7 new emails</span>
-              7
-            </span> */}
-                    </a>
-
-                    {/* Logout Button */}
-                    {isMenuVisible && (
-                      <button
-                        onClick={handleLogout}
-                        className="absolute top-12 left-0 bg-gray-700 hover:bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg"
-                      >
-                        Logout
-                      </button>
-                    )}
-                  </div>
                 )}
               </div>
-
-              {/*        <!-- End Avatar --> */}
             </div>
           </nav>
         </div>
