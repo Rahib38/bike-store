@@ -5,12 +5,14 @@ import Navbar from "./components/ui/Navbar";
 function App() {
   return (
     <>
-      <Navbar></Navbar>
-      <div className="">
-      <Outlet></Outlet>
-      </div>
+      <div className="flex flex-col min-h-screen">
+        <Navbar></Navbar>
+        <div className="flex-grow">
+          <Outlet></Outlet>
+        </div>
 
-      <Footer></Footer>
+        <Footer></Footer>
+      </div>
     </>
   );
 }
