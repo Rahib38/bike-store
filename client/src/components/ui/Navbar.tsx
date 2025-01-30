@@ -1,35 +1,32 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
+import { useAppSelector } from "@/Redux/hooks";
+import { verifyToken } from "@/utils/verifyToken";
 import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import ProfileDropDown from "../ProfileDropDown";
 export default function Navbar() {
   // const[user]=useUserQuery(undefined)
   // const [logout]=useLogoutMutation()
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = useAppSelector(useCurrentToken);
   // Check login state from localStorage on component mount
   useEffect(() => {
     const loggedInStatus = localStorage.getItem("isLoggedIn");
     if (loggedInStatus === "true") {
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
     }
   }, []);
+  let isUserLogin;
+  if (token) {
+    isUserLogin = verifyToken(token as string);
+  }
 
   const handleLogin = () => {
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
     localStorage.setItem("isLoggedIn", "true"); // Persist login state
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn"); // Remove login state
   };
 
   // const navlinks = (
@@ -195,7 +192,6 @@ export default function Navbar() {
                       Service
                     </NavLink>
                   </span>
-            
                 </a>
               </li>
               <li role="none" className="flex items-stretch">
@@ -206,7 +202,7 @@ export default function Navbar() {
                   href="javascript:void(0)"
                 >
                   <span>
-                  <NavLink
+                    <NavLink
                       className={({ isActive }) =>
                         isActive
                           ? "text-emerald-500 underline decoration-2 underline-offset-4"
@@ -214,49 +210,18 @@ export default function Navbar() {
                       }
                       to={"/cart"}
                     >
-                    <FaCartPlus />
+                      <FaCartPlus />
                     </NavLink>
                   </span>
-            
                 </a>
               </li>
             </ul>
 
             <div className="ml-auto flex items-center px-6 lg:ml-0 lg:p-0">
               <div className="flex items-center justify-center min-h-screen">
-                {isLoggedIn ? (
+                {isUserLogin ? (
                   // Avatar with dropdown menu
-                  <div className="relative">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-white">
-                          <img
-                            src="https://i.pravatar.cc/40?img=35"
-                            alt="user name"
-                            title="user name"
-                            width="40"
-                            height="40"
-                            className="max-w-full rounded-full"
-                          />
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-44">
-                        <DropdownMenuItem>
-                          <Link to="/dashboard" className="w-full">
-                            Dashboard
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link to="/profile" className="w-full">
-                            User Profile
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleLogout}>
-                          Logout
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
+                  <ProfileDropDown></ProfileDropDown>
                 ) : (
                   // Login Button
                   <button
