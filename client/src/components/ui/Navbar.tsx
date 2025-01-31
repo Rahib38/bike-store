@@ -29,22 +29,6 @@ export default function Navbar() {
     localStorage.setItem("isLoggedIn", "true"); // Persist login state
   };
 
-  // const navlinks = (
-  //   <>
-  //     <li>
-  //       <NavLink to="/"> Home</NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink to="/art&craft">All Products Page</NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink to="/addcraft"> About</NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink to="/myArt&Craft">My Art&Craft List</NavLink>
-  //     </li>
-  //   </>
-  // );
 
   return (
     <>
