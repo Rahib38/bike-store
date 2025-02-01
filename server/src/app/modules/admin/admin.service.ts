@@ -2,6 +2,15 @@ import { StatusCodes } from 'http-status-codes';
 import AppError from '../../Errors/appError';
 import User from '../user/user.mode';
 
+
+
+const getAllUser=async()=>{
+  const result = await User.find()
+  return result
+}
+
+
+
 const blockUser = async (userId: string) => {
   const checkUser = await User.findById(userId);
   if (!checkUser) {
@@ -24,4 +33,5 @@ const blockUser = async (userId: string) => {
 
 export const AdminService = {
   blockUser,
+  getAllUser
 };

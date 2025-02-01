@@ -40,6 +40,17 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateUser =catchAsync(async(req:Request,res:Response)=>{
+ const {_id}=req.user
+  const body=req.body
+  const result= await AuthService.updateUser(_id,body)
+  sendResponse(res,{
+    success:true,
+    message:"User update successfully",
+    statusCode:StatusCodes.OK,
+    data:result
+  })
+})
 
 const singleUser=catchAsync(async(req:Request,res:Response)=>{
   const id=req.params.id
@@ -96,5 +107,5 @@ export const AuthController = {
   login,
   refreshToken,
   logOut,singleUser,
-  resetPassword
+  resetPassword,updateUser
 };
