@@ -18,7 +18,7 @@ export type Tuser = {
 const ProfileDropDown = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(useCurrentToken);
-  console.log(token);
+  // console.log(token);
 
   const handleLogout = () => {
     // setIsLoggedIn(false);
@@ -30,7 +30,7 @@ const ProfileDropDown = () => {
   if (token) {
     user = verifyToken(token) as Tuser;
   }
-  console.log(user);
+  // console.log(user);
   return (
     <div>
       <div className="relative">
@@ -59,11 +59,11 @@ const ProfileDropDown = () => {
                 </Link>
               )}
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link to="/profile" className="w-full">
+            {/* <DropdownMenuItem>
+              <Link to="profileSettings" className="w-full">
                 User Profile
               </Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
