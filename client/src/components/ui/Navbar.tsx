@@ -29,7 +29,6 @@ export default function Navbar() {
     localStorage.setItem("isLoggedIn", "true"); // Persist login state
   };
 
-
   return (
     <>
       {/*<!-- Component: Navbar with Avatar --> */}
@@ -43,18 +42,24 @@ export default function Navbar() {
           >
             {/*      <!-- Brand logo --> */}
             <a
-              id="WindUI"
-              aria-label="WindUI logo"
-              aria-current="page"
-              className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
-              href="javascript:void(0)"
-            >
-              <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
-                <img src="https://svgsilh.com/svg_v2/158940.svg" alt="" />
-              </a>
-              <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
-              <span className="lg:text-3xl font-semibold">Wheels</span>
-            </a>
+            id="WindUI"
+            aria-label="WindUI logo"
+            aria-current="page"
+            className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
+            href="javascript:void(0)"
+          >
+            <Link to={"/"} className="flex flex-row items-center gap-2">
+              <div>
+                <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
+                  <img src="https://svgsilh.com/svg_v2/158940.svg" alt="" />
+                </a>
+              </div>
+              <div>
+                <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
+                <span className="lg:text-3xl font-semibold">Wheels</span>
+              </div>
+            </Link>
+          </a>
             {/*      <!-- Mobile trigger --> */}
             <button
               className={`relative order-10 block h-10 w-10 self-center lg:hidden

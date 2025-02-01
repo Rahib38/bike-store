@@ -1,9 +1,12 @@
+import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
+import { useAppSelector } from "@/Redux/hooks";
+import { verifyToken } from "@/utils/verifyToken";
 import { useState } from "react";
 import { FaHome } from "react-icons/fa";
-import { IoIosAddCircle } from "react-icons/io";
 import { MdGridView } from "react-icons/md";
 
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { Tuser } from "../ProfileDropDown";
 
 const adminNavItems = [
   {
@@ -12,17 +15,24 @@ const adminNavItems = [
     link: "/adminDashboard",
     path: "/adminDashboard",
   },
-  {
-    title: "Add Product",
-    icons: <IoIosAddCircle className="mr-2" />,
-    link: "addProduct",
-    path: "/adminDashboard/addProduct",
-  },
+
   {
     title: "All Products",
     icons: <MdGridView className="mr-2" />,
     link: "allProducts",
     path: "/adminDashboard/allProducts",
+  },
+  {
+    title: "All Users",
+    icons: <MdGridView className="mr-2" />,
+    link: "allUsers",
+    path: "/adminDashboard/allUsers",
+  },
+  {
+    title: "Profile Settings",
+    icons: <MdGridView className="mr-2" />,
+    link: "profileSettings",
+    path: "/adminDashboard/profileSettings",
   },
 ];
 
@@ -31,14 +41,38 @@ const AdminDashboardLayout = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
 
   const location = useLocation();
-  console.log(location)
+  console.log(location);
 
+  const token = useAppSelector(useCurrentToken);
+  console.log(token);
+  let user;
+  if (token) {
+    user = verifyToken(token) as Tuser;
+  }
   return (
     <div>
       <div className="min-h-screen flex flex-col">
         {/* Header */}
         <header className="bg-emerald-500 h-16 w-full flex items-center justify-between px-6 text-white shadow-md">
-          <h1 className="text-xl font-bold">Professional DashboardLayout</h1>
+          <a
+            id="WindUI"
+            aria-label="WindUI logo"
+            aria-current="page"
+            className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
+            href="javascript:void(0)"
+          >
+            <Link to={"/"} className="flex flex-row items-center gap-2">
+              <div>
+                <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
+                  <img src="https://svgsilh.com/svg_v2/158940.svg" alt="" />
+                </a>
+              </div>
+              <div>
+                <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
+                <span className="lg:text-3xl font-semibold">Wheels</span>
+              </div>
+            </Link>
+          </a>
           {/* Sidebar Toggle Button */}
           <button
             className={`relative order-10 block h-10 w-10 self-center lg:hidden
@@ -77,7 +111,7 @@ const AdminDashboardLayout = () => {
               alt="User Avatar"
               className="w-10 h-10 rounded-full border-2 border-white"
             />
-            <span className="text-white font-semibold">John Doe</span>
+            <span className="text-white font-semibold">{user?.email}</span>
           </div>
         </header>
 
@@ -91,18 +125,18 @@ const AdminDashboardLayout = () => {
             <h2 className="text-lg font-semibold">Menu</h2>
             <ul className="space-y-4">
               {adminNavItems.map((item, index) => (
-                <li key={index+1}>
+                <li key={index + 1}>
                   <Link
                     to={item?.link}
-                    className="flex items-center py-2 px-4 rounded-lg hover:bg-emerald-500 hover:text-white transition"
+                    className={`flex items-center py-2 px-4 rounded-lg transition ${
+                      location?.pathname === item?.path
+                        ? "bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-lg scale-105" // Active
+                        : "hover:bg-emerald-500 hover:text-white"
+                    }`}
                   >
-                    <button
-                      className={`flex items-center ${
-                        location?.pathname === item?.path?"text-red-500":""
-                      }`}
-                    >
+                    <button className="flex items-center gap-2">
                       {item?.icons}
-                      {item?.title}
+                      <span className="font-medium">{item?.title}</span>
                     </button>
                   </Link>
                 </li>
@@ -111,7 +145,7 @@ const AdminDashboardLayout = () => {
           </aside>
 
           {/* Main Content */}
-     <Outlet></Outlet>
+          <Outlet></Outlet>
         </div>
       </div>
     </div>
