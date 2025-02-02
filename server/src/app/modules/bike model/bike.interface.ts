@@ -5,5 +5,5 @@ export type Bike = {
   category: 'Mountain' | 'Road' | 'Hybrid' | 'Electric';
   description: string;
   quantity: number;
-  inStock: boolean;
+  inStock?: boolean;
 };

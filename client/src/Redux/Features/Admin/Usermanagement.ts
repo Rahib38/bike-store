@@ -4,16 +4,16 @@ const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     allUsers: builder.query({
       query: () => ({
-        url: "/admin/user",
+        url: "/admin/users",
         method: "GET",
       }),
     }),
-    updateUsers: builder.query({
+    deactiveUsers: builder.mutation({
       query: (id) => ({
-        url: `/admin/user/${id}/block`,
-        method: "GET",
+        url: `/admin/users/${id}/block`,
+        method: "PATCH",
       }),
     }),
   }),
 });
-export const { useAllUsersQuery,useUpdateUsersQuery } = userApi;
+export const { useAllUsersQuery,useDeactiveUsersMutation } = userApi;

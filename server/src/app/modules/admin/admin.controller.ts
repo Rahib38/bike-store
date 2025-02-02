@@ -4,6 +4,17 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AdminService } from './admin.service';
 
+
+const allUser= catchAsync(async(req,res)=>{
+  const result=  await AdminService.getAllUser()
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: 'All user reterive successfully',
+    data: result
+})
+})
+
+
 const blockUser = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const result = await AdminService.blockUser(userId);
@@ -16,5 +27,5 @@ const blockUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const AdminController = {
-  blockUser,
+  blockUser,allUser
 };

@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { baseApi } from './Api/baseApi'
 import authSlice from './Features/Auth/AuthSlice'
+import productSlice from './Features/Admin/productSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer,FLUSH,
     REHYDRATE,
@@ -9,17 +10,23 @@ import { persistStore, persistReducer,FLUSH,
     PURGE,
     REGISTER, } from 'redux-persist'
 
-const persistConfig = {
-    key: 'authTask',
+const authPersistConfig = {
+    key: 'BikeAuth',
+    storage,
+  };
+const productPersistConfig = {
+    key: 'BikeProduct',
     storage,
   };
 
-  const persistedAuthReducer = persistReducer(persistConfig, authSlice);
+  const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
+  const persistedProductReducer = persistReducer(productPersistConfig, productSlice);
 
 export const store = configureStore({
     reducer: {
         [baseApi.reducerPath]: baseApi.reducer,
-        auth: persistedAuthReducer
+        auth: persistedAuthReducer,
+        product:persistedProductReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

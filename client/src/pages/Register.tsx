@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "@/Redux/Features/Auth/AuthApi";
 import { toast } from "sonner";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const navigate=useNavigate()
@@ -40,6 +41,7 @@ const Register = () => {
 
   return (
     <section className="py-32 max-h-full">
+         <Helmet><title>RideOn Wheels | Register</title></Helmet>
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className="mx-auto w-full max-w-sm rounded-md p-6 shadow">
@@ -74,7 +76,7 @@ const Register = () => {
                   />
                       {errors.name && (
                     <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message}
+                        {errors?.name?.message }
                     </p>
                   )}
                 </div>

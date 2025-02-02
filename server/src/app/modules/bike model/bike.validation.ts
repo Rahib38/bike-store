@@ -16,6 +16,5 @@ export const BikeSchema = z.object({
       .number()
       .int('Quantity must be an integer')
       .nonnegative('Quantity cannot be negative'),
-    inStock: z.boolean(),
   }),
 });

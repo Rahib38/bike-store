@@ -4,6 +4,8 @@ import { AdminController } from './admin.controller';
 
 const adminRouter = Router();
 
+
+adminRouter.get('/users',auth('admin'),AdminController.allUser)
 adminRouter.patch(
   '/users/:userId/block',
   auth('admin'),

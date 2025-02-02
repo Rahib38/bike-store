@@ -22,6 +22,11 @@ authRouter.get(
 
   AuthController.singleUser,
 );
+authRouter.patch(
+  '/user/updateProfile',auth("admin","customer"),
+
+  AuthController.updateUser,
+);
 authRouter.post(
   '/refresh-token',
   validateRequest(AuthValiditon.refreshTokenValidationSchema),

@@ -65,6 +65,13 @@ const login = async (payload: { email: string; password: string }) => {
   // return {token, user};
 };
 
+const updateUser= async(_id:string,user:TUser)=>{
+  console.log("id,use",_id,user)
+const result = await User.findByIdAndUpdate(_id,user,{new:true})
+console.log(result)
+return result
+}
+
 const singleUser = async (_id: string) => {
   console.log(_id,"kemon achen")
   const result = await User.findById(_id);
@@ -144,4 +151,5 @@ export const AuthService = {
   refreshToken,
   resetPassword,
   singleUser,
+  updateUser
 };

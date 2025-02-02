@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BikeModel } from '../bike model/bike.model';
+import { TUser } from '../user/user.interface';
 import { Order } from './order.interface';
 import { orderModel } from './order.model';
-const createOder = async (order: Order) => {
+import { orderUtils } from './order.utills';
+const createOder = async (order: Order, user: TUser) => {
   const getbikeId = await BikeModel.findById(order?.product);
   if (!getbikeId) {
     const result = {
@@ -32,6 +34,20 @@ const createOder = async (order: Order) => {
   }
   await getbikeId.save();
   const result = await orderModel.create(order);
+
+//   // payment integration
+//   const shurjopayPayload = {
+//     amount: order.totalPrice,
+//     order_id: 'N/A',
+//     currency: 'BDT',
+//     customer_name: user?.name,
+//     customer_email: user?.email,
+//     customer_phone: "N/A",
+//     customer_city: "N/A",
+//   };
+
+// await orderUtils.makePayment(shurjopayPayload)
+
   return {
     success: true,
     message: 'order create successfully',

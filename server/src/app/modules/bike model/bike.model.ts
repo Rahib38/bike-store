@@ -47,7 +47,7 @@ const bikeSchema = new Schema<Bike>(
     },
     inStock: {
       type: Boolean,
-      required: [true, 'InStock field is required'],
+      default: true,
     },
   },
   {

@@ -1,53 +1,32 @@
-import { useState } from "react";
+import { removeCart, updateCart } from "@/Redux/Features/Admin/productSlice";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Mountain Bike",
-      price: 450,
-      quantity: 1,
-      image:
-        "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/royal-enfield-select-model-british-racing-green-1668419802695.jpg?q=80",
-    },
-    {
-      id: 2,
-      name: "Road Bike",
-      price: 650,
-      quantity: 2,
-      image:
-        "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--drum1727090924411.jpg?q=80",
-    },
-  ]);
-
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
+  const dispatch = useAppDispatch();
+  const { carts, selectedItems, totalPrice } = useAppSelector(
+    (state) => state.product
   );
+  console.log(carts);
 
-  const handleQuantityChange = (id, action) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                action === "increment"
-                  ? item.quantity + 1
-                  : Math.max(1, item.quantity - 1),
-            }
-          : item
-      )
-    );
+  // const totalPrice = cartItems.reduce(
+  //   (total, item) => total + item.price * item.quantity,
+  //   0
+  // );
+
+  const handleQuantityChange = (id: string, type: string) => {
+    dispatch(updateCart({ type, id }));
+    console.log(id);
   };
 
-  const handleRemoveItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleRemoveItem = (id: string) => {
+    dispatch(removeCart(id));
   };
 
   return (
     <div className="bg-gray-50 py-12">
+         <Helmet><title>RideOn Wheels | Cart</title></Helmet>
       <div className="max-w-screen-xl mx-auto px-6">
         {/* Header */}
         <h1 className="text-4xl font-bold text-emerald-600 text-center mb-12">
@@ -55,8 +34,9 @@ const Cart = () => {
         </h1>
 
         {/* Cart Items */}
+
         <div className="bg-white rounded-lg shadow-md p-6">
-          {cartItems.length > 0 ? (
+          {carts.length > 0 ? (
             <>
               <div className="hidden lg:grid md:grid-cols-6 font-semibold text-gray-600 border-b pb-4 mb-4">
                 <p></p>
@@ -66,15 +46,15 @@ const Cart = () => {
                 <p>Total</p>
               </div>
 
-              {cartItems.map((item) => (
+              {carts.map((item) => (
                 <div
-                  key={item.id}
+                  key={item?._id}
                   className="border-b pb-4 mb-4 lg:grid md:grid-cols-6 items-center gap-4"
                 >
                   {/* For Large Screens */}
                   <div className="hidden lg:block text-center">
                     <button
-                      onClick={() => handleRemoveItem(item.id)}
+                      onClick={() => handleRemoveItem(item?._id)}
                       className="text-red-500 hover:text-red-700 transition lg:text-xl"
                       title="Remove item"
                     >
@@ -97,14 +77,18 @@ const Cart = () => {
                   </p>
                   <div className="hidden lg:flex items-center space-x-4">
                     <button
-                      onClick={() => handleQuantityChange(item.id, "decrement")}
+                      onClick={() =>
+                        handleQuantityChange(item?._id, "decrement")
+                      }
                       className="bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-300"
                     >
                       -
                     </button>
-                    <p className="text-lg text-gray-700">{item.quantity}</p>
+                    <p className="text-lg text-gray-700">{item?.quantity}</p>
                     <button
-                      onClick={() => handleQuantityChange(item.id, "increment")}
+                      onClick={() =>
+                        handleQuantityChange(item?._id, "increment")
+                      }
                       className="bg-gray-200 text-gray-800 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-300"
                     >
                       +
@@ -128,7 +112,7 @@ const Cart = () => {
                         </p>
                       </div>
                       <button
-                        onClick={() => handleRemoveItem(item.id)}
+                        onClick={() => handleRemoveItem(item?._id)}
                         className="text-red-500 hover:text-red-700 transition text-lg"
                         title="Remove item"
                       >
@@ -147,7 +131,7 @@ const Cart = () => {
                       <div className="flex items-center space-x-4">
                         <button
                           onClick={() =>
-                            handleQuantityChange(item.id, "decrement")
+                            handleQuantityChange(item?._id, "decrement")
                           }
                           className="bg-gray-200 text-gray-800 rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300"
                         >
@@ -156,7 +140,7 @@ const Cart = () => {
                         <p className="text-sm text-gray-700">{item.quantity}</p>
                         <button
                           onClick={() =>
-                            handleQuantityChange(item.id, "increment")
+                            handleQuantityChange(item?._id, "increment")
                           }
                           className="bg-gray-200 text-gray-800 rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300"
                         >
@@ -190,7 +174,7 @@ const Cart = () => {
                 Your cart is currently empty!
               </p>
               <button className="mt-4 bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none">
-                Continue Shopping
+                <Link to={"/allProduct"}> Continue Shopping</Link>
               </button>
             </div>
           )}

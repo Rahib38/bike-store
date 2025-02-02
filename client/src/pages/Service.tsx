@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const Service = () => {
   const [faqOpen, setFaqOpen] = useState(null);
@@ -10,6 +11,7 @@ const Service = () => {
   return (
     <div className="bg-gray-50 py-12">
       {/* Page Header */}
+      <Helmet><title>RideOn Wheels | Service</title></Helmet>
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold text-emerald-600">Our Services</h1>
         <p className="text-lg text-gray-600 mt-3">

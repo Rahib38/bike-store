@@ -10,6 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/Redux/hooks";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Login = () => {
   };
   return (
     <section className="py-32 max-h-full">
+         <Helmet><title>RideOn Wheels | Login</title></Helmet>
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className="mx-auto w-full max-w-sm rounded-md p-6 shadow">
