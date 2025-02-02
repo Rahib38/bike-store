@@ -7,6 +7,7 @@ import { MdGridView } from "react-icons/md";
 
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Tuser } from "../ProfileDropDown";
+import { Helmet } from "react-helmet";
 
 const adminNavItems = [
   {
@@ -52,6 +53,7 @@ const AdminDashboardLayout = () => {
   return (
     <div>
       <div className="min-h-screen flex flex-col">
+      <Helmet><title>RideOn Wheels | Admin Dashboard</title></Helmet>
         {/* Header */}
         <header className="bg-emerald-500 h-16 w-full flex items-center justify-between px-6 text-white shadow-md">
           <a
