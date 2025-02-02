@@ -5,6 +5,7 @@ import {
   useAllUsersQuery,
   useDeactiveUsersMutation,
 } from "@/Redux/Features/Admin/Usermanagement";
+import { Helmet } from "react-helmet";
 import { toast } from "sonner";
 
 export type TUser = {
@@ -45,6 +46,7 @@ const AllUser = () => {
 
   return (
     <div className="w-full mt-5">
+       <Helmet><title>RideOn Wheels | Admin All Users</title></Helmet>
       <div className="flex justify-end"></div>
       <table className="w-full text-left mt-5 border border-separate rounded border-slate-200">
         <tbody>
