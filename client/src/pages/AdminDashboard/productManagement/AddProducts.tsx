@@ -4,6 +4,22 @@ import { useAddProductMutation } from "@/Redux/Features/Admin/adminManagement";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+
+export type Tproduct = {
+  brand: string
+  description: string
+  inStock: boolean
+  name: string
+  image: string
+  price: number
+  quantity: number
+  type: string
+  updatedAt: string
+  _id: string,
+  totalQuantity?:number
+}
+
+
 const AddProducts = () => {
   const [addProduct] = useAddProductMutation();
 
@@ -15,7 +31,7 @@ const AddProducts = () => {
   } = useForm();
   const onSubmit = async (data: FieldValues) => {
     try {
-      const result = await addProduct(data);
+      const result = await addProduct(data) ;
       if (result.error) {
         toast.error("Failed to add product");
       } else {

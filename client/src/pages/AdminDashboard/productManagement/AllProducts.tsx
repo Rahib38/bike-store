@@ -7,6 +7,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "sonner";
 import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
+import { Helmet } from "react-helmet";
 
 // interface data {
 //   _id: string;
@@ -45,6 +46,7 @@ const AllProducts = () => {
 
   return (
     <div className="w-full mt-5">
+         <Helmet><title>RideOn Wheels | Admin All Products</title></Helmet>
       <div className="flex justify-end">
         <AddModal />
       </div>
