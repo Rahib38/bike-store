@@ -42,9 +42,11 @@ const Cards = () => {
             <p>price: ${item?.price}</p>
           </CardContent>
           <CardFooter>
-            <button className="bg-emerald-400 text-white  rounded-2xl p-1 px-4 ">
-              <Link to={`/cardDetails/${item?._id}`}>View Details</Link>
-            </button>
+            <Link to={`/cardDetails/${item?._id}`}>
+              <button className="bg-emerald-400 text-white  rounded-xl p-2 px-4 ">
+                View Details
+              </button>
+            </Link>
           </CardFooter>
         </Card>
       ))}

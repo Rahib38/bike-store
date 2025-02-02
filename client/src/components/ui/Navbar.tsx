@@ -33,7 +33,7 @@ export default function Navbar() {
     <>
       {/*<!-- Component: Navbar with Avatar --> */}
       {/*<!-- Header --> */}
-      <header className=" relative z-20 w-full border-b border-slate-200 bg-white/90 shadow-lg shadow-slate-700/5 after:absolute after:left-0 after:top-full after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden">
+      <header className="  sticky top-0 z-10 w-full border-b border-slate-200 bg-white/90 shadow-lg shadow-slate-700/5 after:absolute after:left-0 after:top-full after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden">
         <div className="relative mx-auto max-w-full px-6 lg:max-w-5xl xl:max-w-7xl 2xl:max-w-[96rem]">
           <nav
             aria-label="main navigation"
@@ -42,24 +42,24 @@ export default function Navbar() {
           >
             {/*      <!-- Brand logo --> */}
             <a
-            id="WindUI"
-            aria-label="WindUI logo"
-            aria-current="page"
-            className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
-            href="javascript:void(0)"
-          >
-            <Link to={"/"} className="flex flex-row items-center gap-2">
-              <div>
-                <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
-                  <img src="https://svgsilh.com/svg_v2/158940.svg" alt="" />
-                </a>
-              </div>
-              <div>
-                <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
-                <span className="lg:text-3xl font-semibold">Wheels</span>
-              </div>
-            </Link>
-          </a>
+              id="WindUI"
+              aria-label="WindUI logo"
+              aria-current="page"
+              className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
+              href="javascript:void(0)"
+            >
+              <Link to={"/"} className="flex flex-row items-center gap-2">
+                <div>
+                  <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
+                    <img src="https://svgsilh.com/svg_v2/158940.svg" alt="" />
+                  </a>
+                </div>
+                <div>
+                  <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
+                  <span className="lg:text-3xl font-semibold">Wheels</span>
+                </div>
+              </Link>
+            </a>
             {/*      <!-- Mobile trigger --> */}
             <button
               className={`relative order-10 block h-10 w-10 self-center lg:hidden
@@ -213,12 +213,15 @@ export default function Navbar() {
                   <ProfileDropDown></ProfileDropDown>
                 ) : (
                   // Login Button
-                  <button
-                    onClick={handleLogin}
-                    className="focus:text-emerald-600 bg-emerald-500 text-white py-2 px-4 rounded"
-                  >
-                    <Link to="/login">Login</Link>
-                  </button>
+                  <Link to="/login">
+                    {" "}
+                    <button
+                      onClick={handleLogin}
+                      className="focus:text-emerald-600 bg-emerald-500 text-white py-2 px-4 rounded"
+                    >
+                      Login
+                    </button>
+                  </Link>
                 )}
               </div>
             </div>
