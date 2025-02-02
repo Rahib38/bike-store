@@ -1,8 +1,10 @@
+import { Helmet } from "react-helmet";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa"; // FontAwesome icons
 
 const About = () => {
   return (
     <div className="bg-gray-50 min-h-screen py-12">
+         <Helmet><title>RideOn Wheels | About</title></Helmet>
       {/* Main Content */}
       <div className="max-w-screen-xl mx-auto px-6">
         {/* Page Title */}

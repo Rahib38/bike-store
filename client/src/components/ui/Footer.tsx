@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
   return (
     <>
@@ -10,43 +12,34 @@ export default function Footer() {
           <div className="container px-6 mx-auto">
             <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
               <div
-                className="col-span-4 md:col-span-8 lg:col-span-4"
+                className=" col-span-4 md:col-span-8 lg:col-span-4"
                 aria-labelledby="footer-header"
               >
                 <a
-                  id="WindUI-5-logo"
+                  id="WindUI"
                   aria-label="WindUI logo"
                   aria-current="page"
-                  className="flex items-center gap-2 mb-6 text-base font-medium leading-6 whitespace-nowrap text-slate-700 focus:outline-none"
+                  className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1 lg:ml-5"
                   href="javascript:void(0)"
                 >
-                  <svg
-                    width="300"
-                    height="300"
-                    viewBox="0 0 300 300"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 shrink-0 bg-emerald-500"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M88.1121 88.1134L150.026 150.027L150.027 150.027L150.027 150.027L150.028 150.027L150.027 150.026L88.1133 88.1122L88.1121 88.1134ZM273.878 273.877C272.038 274.974 196.128 319.957 165.52 289.349L88.1124 211.942L26.1434 273.911C26.1434 273.911 -20.3337 196.504 10.651 165.519L88.1121 88.1134L26.1417 26.1433C26.1417 26.1433 69.6778 0.00338007 104.519 0H0V300H300V0H104.533C116.144 0.00112664 126.789 2.90631 134.534 10.651L211.941 88.1123L273.877 26.177C274.974 28.0159 319.957 103.926 289.349 134.535L211.942 211.942L273.878 273.877ZM273.878 273.877L273.912 273.857V273.911L273.878 273.877ZM273.877 26.177L273.911 26.1429H273.857C273.857 26.1429 273.863 26.1544 273.877 26.177Z"
-                      fill="#f1f5f9"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M0 0H300V300H0V0ZM150.026 150.025C121.715 99.731 88.1131 88.1122 88.1131 88.1122L10.6508 165.519C10.6508 165.519 26.143 150.027 150.026 150.027H150.027C150.026 150.027 150.026 150.027 150.026 150.027L150.026 150.027C99.731 178.339 88.1124 211.941 88.1124 211.941L165.52 289.348C165.52 289.348 150.032 273.86 150.027 150.027H150.029C178.341 200.323 211.944 211.942 211.944 211.942L289.352 134.535C289.352 134.535 273.864 150.023 150.027 150.027V150.027L150.027 150.027C200.322 121.715 211.941 88.1125 211.941 88.1125L134.534 10.651C134.534 10.651 150.026 26.1431 150.026 150.025ZM150.027 150.027L150.026 150.027C150.026 150.026 150.026 150.026 150.026 150.025C150.026 150.025 150.027 150.026 150.027 150.027ZM150.027 150.027L150.027 150.026L150.027 150.027C150.027 150.027 150.027 150.027 150.027 150.027L150.027 150.027ZM150.027 150.027C150.027 150.027 150.027 150.027 150.027 150.027H150.027L150.027 150.027Z"
-                      fill="rgba(255, 255, 255, .2)"
-                    />
-                  </svg>
-                  Brand
+                  <Link to={"/"} className="flex flex-row items-center gap-2">
+                    <div>
+                      <a className="relative inline-flex items-center justify-center w-20 h-20  text-lg text-white  lg:-ml-6 rounded-full ">
+                        <img
+                          src="https://svgsilh.com/svg_v2/158940.svg"
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                    <div>
+                      <span className="lg:text-3xl font-semibold">RideOn</span>{" "}
+                      <span className="lg:text-3xl font-semibold">Wheels</span>
+                    </div>
+                  </Link>
                 </a>
                 <p>
-                  Expertly made, responsive, accessible components in React and
-                  HTML ready to be used on your website or app. Just copy and
-                  paste them on your Tailwind CSS project.
+                  At RideOn Wheels, our mission is to inspire and empower
+                  individuals through the joy of bikeing.
                 </p>
               </div>
               <nav
@@ -271,8 +264,7 @@ export default function Footer() {
           <div className="container px-6 mx-auto">
             <div className="grid items-center grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
               <div className="col-span-2 md:col-span-4 lg:col-span-6">
-                Copyright  {currentYear} Brand
-                
+                Copyright {currentYear} Brand
               </div>
               <nav
                 className="col-span-3 md:col-span-4 lg:col-span-6"

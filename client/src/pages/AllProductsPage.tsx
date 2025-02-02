@@ -1,8 +1,10 @@
 import Cards from "@/components/Cards";
+import { Helmet } from "react-helmet";
 
 const AllProductsPage = () => {
   return (
     <div className="container mx-auto mt-5 ">
+         <Helmet><title>RideOn Wheels | All Products</title></Helmet>
       <div className="w-full h-[60px] border rounded-xl flex flex-col md:flex-row justify-between">
         <div className="relative mt-2 ml-2">
           <input
