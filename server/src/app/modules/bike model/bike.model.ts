@@ -15,6 +15,9 @@ const bikeSchema = new Schema<Bike>(
 
       trim: true,
     },
+    image: {
+      type: String,
+    },
     price: {
       type: Number,
       required: [true, 'Price is required'],

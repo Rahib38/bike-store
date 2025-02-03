@@ -14,6 +14,18 @@ const userSchema = new Schema<TUser>(
       unique: true,
       required: true,
     },
+    city: {
+      type: String,
+      default: '',
+    },
+    address: {
+      type: String,
+      default: '',
+    },
+    phone: {
+      type: String,
+      default: '',
+    },
     password: {
       type: String,
       required: true,

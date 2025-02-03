@@ -4,6 +4,7 @@ export const BikeSchema = z.object({
   body: z.object({
     name: z.string().min(1, 'Name is required'),
     brand: z.string().min(1, 'Brand is required'),
+    image: z.string().optional(),
     price: z
       .number()
       .positive('Price must be a positive number')
