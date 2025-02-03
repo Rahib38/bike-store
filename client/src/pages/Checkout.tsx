@@ -1,40 +1,60 @@
-import React, { useState } from "react";
+import { Tuser } from "@/components/ProfileDropDown";
+import { useCreateOrderMutation } from "@/Redux/Features/Admin/OrderApi";
+import { useUserQuery } from "@/Redux/Features/Auth/AuthApi";
+import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
+import { useAppSelector } from "@/Redux/hooks";
+import { verifyToken } from "@/utils/verifyToken";
 import { Helmet } from "react-helmet";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const Checkout = () => {
-  const [billingDetails, setBillingDetails] = useState({
-    name: "",
-    email: "",
-    address: "",
-    phone: "",
-  });
+  const token = useAppSelector(useCurrentToken);
+  let user;
+  if (token) {
+    user = verifyToken(token) as Tuser;
+  }
+  // console.log(user)
+  const { data: singleData } = useUserQuery(user?._id);
+  // console.log(singleData)
+  const [orderProduct]=useCreateOrderMutation()
+  // console.log(orderProduct)
 
-  const [orderSummary] = useState([
-    { id: 1, name: "Mountain Bike", price: 450, quantity: 1 },
-    { id: 2, name: "Road Bike", price: 650, quantity: 2 },
-  ]);
-
-  const totalPrice = orderSummary.reduce(
+  const { carts } = useAppSelector((state) => state?.product);
+  const {
+    register,
+    reset,
+    handleSubmit,
+  } = useForm();
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const result = await orderProduct(data) ;
+      console.log(result,"dkfkd")
+      if (result.error) {
+        toast.error("Failed to order");
+      } else {
+        toast.success("order successfully", { duration: 2000 });
+        reset();
+      }
+      console.log(result, "addProduct");
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong");
+    }
+  };
+  const totalPrice = carts.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBillingDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
 
-  const handlePlaceOrder = () => {
-    alert("Order placed successfully!");
-    // You can handle order submission logic here
-  };
 
   return (
     <div className="bg-gray-50 py-12">
-         <Helmet><title>RideOn Wheels | Checkout</title></Helmet>
+      <Helmet>
+        <title>RideOn Wheels | Checkout</title>
+      </Helmet>
       <div className="max-w-screen-xl mx-auto px-6">
         <h1 className="text-4xl font-bold text-emerald-600 text-center mb-12">
           Checkout
@@ -46,27 +66,26 @@ const Checkout = () => {
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Billing Details
             </h2>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label className="block text-gray-600 mb-2">Name</label>
                 <input
                   type="text"
-                  name="name"
-                  value={billingDetails.name}
-                  onChange={handleChange}
+                  defaultValue={singleData?.data?.name}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   placeholder="Your Name"
+                  {...register('name')}
                 />
               </div>
               <div className="mb-4">
                 <label className="block text-gray-600 mb-2">Email</label>
                 <input
                   type="email"
-                  name="email"
-                  value={billingDetails.email}
-                  onChange={handleChange}
+                  value={singleData?.data?.email}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   placeholder="Your Email"
+                  {...register('email')}
+
                 />
               </div>
               <div className="mb-4">
@@ -74,8 +93,7 @@ const Checkout = () => {
                 <input
                   type="text"
                   name="address"
-                  value={billingDetails.address}
-                  onChange={handleChange}
+                  value={singleData?.data?.address}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   placeholder="Your Address"
                 />
@@ -85,12 +103,16 @@ const Checkout = () => {
                 <input
                   type="tel"
                   name="phone"
-                  value={billingDetails.phone}
-                  onChange={handleChange}
+                  value={singleData?.data?.phone}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   placeholder="Your Phone Number"
                 />
               </div>
+              <button
+                className="mt-6 w-full bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none"
+              >
+                Place Order
+              </button>
             </form>
           </div>
 
@@ -100,17 +122,17 @@ const Checkout = () => {
               Order Summary
             </h2>
             <div className="space-y-4">
-              {orderSummary.map((item) => (
+              {carts.map((item) => (
                 <div
-                  key={item.id}
+                  key={item?._id}
                   className="flex justify-between items-center border-b pb-2"
                 >
                   <div>
                     <p className="text-lg text-gray-800 font-medium">
-                      {item.name}
+                      {item?.name}
                     </p>
                     <p className="text-sm text-gray-500">
-                      Quantity: {item.quantity}
+                      Quantity: {item?.quantity}
                     </p>
                   </div>
                   <p className="text-lg text-gray-700">
@@ -125,12 +147,6 @@ const Checkout = () => {
                 ${totalPrice.toFixed(2)}
               </p>
             </div>
-            <button
-              onClick={handlePlaceOrder}
-              className="mt-6 w-full bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none"
-            >
-              Place Order
-            </button>
           </div>
         </div>
       </div>
@@ -139,4 +155,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-

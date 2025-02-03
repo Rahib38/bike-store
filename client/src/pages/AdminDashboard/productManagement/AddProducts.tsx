@@ -1,26 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAddProductMutation } from "@/Redux/Features/Admin/adminManagement";
+import axios from "axios";
+import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-
 export type Tproduct = {
-  brand: string
-  description: string
-  inStock: boolean
-  name: string
-  image: string
-  price: number
-  quantity: number
-  type: string
-  updatedAt: string
-  _id: string,
-  totalQuantity?:number
-}
-
+  brand: string;
+  description: string;
+  inStock: boolean;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+  type: string;
+  updatedAt: string;
+  _id: string;
+  totalQuantity?: number;
+};
 
 const AddProducts = () => {
+  const [image, setImage] = useState<File | null>(null);
+
   const [addProduct] = useAddProductMutation();
 
   const {
@@ -29,9 +31,33 @@ const AddProducts = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const handleImageChange = (file: File) => {
+    setImage(file);
+  };
+
+  console.log(image);
+
   const onSubmit = async (data: FieldValues) => {
     try {
-      const result = await addProduct(data) ;
+
+if(!image) return alert("Select your image first")
+  const formData=new FormData()
+
+formData.append("file",image)
+formData.append("upload_preset", "Rahib38")
+
+const response = await axios.post(
+  "https://api.cloudinary.com/v1_1/drcynlax7/image/upload", // Replace with your Cloudinary cloud name
+  formData
+);
+const imageUrl=response.data.secure_url
+const productData={
+  ...data,
+  image:imageUrl
+}
+
+      const result = await addProduct(productData);
       if (result.error) {
         toast.error("Failed to add product");
       } else {
@@ -50,19 +76,7 @@ const AddProducts = () => {
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className=" w-full  rounded-md p-6 shadow">
-            <div className="mb-6 flex flex-col items-center">
-              <a href="https://shadcnblocks.com">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  alt="logo"
-                  className="mb-7 h-10 w-auto"
-                />
-              </a>
-              <p className="mb-2 text-2xl font-bold">Shadcnblocks.com</p>
-              <p className="text-muted-foreground">
-                Please enter your details.
-              </p>
-            </div>
+      
             <div>
               <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 ">
                 <div className="flex flex-col md:flex-row gap-2">
@@ -96,6 +110,26 @@ const AddProducts = () => {
                       {...register("brand", { required: "Brand is required" })}
                     />
                     {errors.brand && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors?.name?.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="w-full">
+                    <label className="text-sm font-medium " htmlFor="image">
+                      Image
+                    </label>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          handleImageChange(file); // Store the selected file in state
+                        }
+                      }}
+                    />
+                    {errors.image && (
                       <p className="text-red-500 text-sm mt-1">
                         {errors?.name?.message}
                       </p>
@@ -149,7 +183,7 @@ const AddProducts = () => {
                           required: "Category is required",
                         })}
                       >
-                        <option  value="" disabled selected></option>
+                        <option value="" disabled selected></option>
                         <option value="Mountain">Mountain</option>
                         <option value="Road">Road</option>
                         <option value="Hybrid">Hybrid</option>
@@ -207,7 +241,7 @@ const AddProducts = () => {
                   )}
                 </div>
 
-                <Button type="submit" className="mt-2 w-full">
+                <Button type="submit" className="mt-2 w-full bg-emerald-500 hover:bg-emerald-500">
                   Add Product
                 </Button>
               </form>
