@@ -29,7 +29,7 @@ const productSlice = createSlice({
         toast.success("Already Add Cart");
       }
       state.selectedItems = setSelectedItems(state);
-      state.totalPrice = setTotalPrice(state);
+      // state.totalPrice = setTotalPrice(state);
     },
     updateCart:(state,action)=>{
         state.carts.map(cart=>{
@@ -62,10 +62,10 @@ export const setSelectedItems = (state: TinitialState) =>
     return Number(total + cart.quantity);
   }, 0);
 
-export const setTotalPrice = (state: TinitialState) =>
-  state.carts.reduce((total: number, cart: Tproduct) => {
-    return Number(total + cart.quantity * cart.price);
-  }, 0);
+// export const setTotalPrice = (state: TinitialState) =>
+//   state.carts.reduce((total: number, cart: Tproduct) => {
+//     return Number(total + cart.quantity * cart.price);
+//   }, 0);
 
 export const { addCart,updateCart,removeCart } = productSlice.actions;
 export default productSlice.reducer;

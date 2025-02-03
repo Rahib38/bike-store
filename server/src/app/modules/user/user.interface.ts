@@ -1,9 +1,10 @@
-
 export type TUser = {
   name: string;
   email: string;
   password: string;
   role?: 'customer' | 'admin';
   isBlocked?: boolean;
-
+  city?: string;
+  address?: string;
+  phone?: string;
 };
