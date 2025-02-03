@@ -1,9 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import "swiper/swiper-bundle.css";
+
+
 
 import { Autoplay, History, Navigation, Pagination } from "swiper/modules";
 
