@@ -1,29 +1,32 @@
 import { Tuser } from "@/components/ProfileDropDown";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useUserUpdateMutation } from "@/Redux/Features/Auth/AuthApi";
+import {
+  useUserQuery,
+  useUserUpdateMutation,
+} from "@/Redux/Features/Auth/AuthApi";
 import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
 import { useAppSelector } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { FieldValues, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const UpdateUser = () => {
   const [userUpdate] = useUserUpdateMutation();
+  const { id } = useParams();
+  console.log(id);
 
   const token = useAppSelector(useCurrentToken);
-  console.log(token);
   let user;
   if (token) {
     user = verifyToken(token) as Tuser;
   }
+  const { data: singleData } = useUserQuery(user?._id);
+  const datas = singleData?.data;
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data: FieldValues) => {
     console.log("sn", data);
@@ -50,7 +53,7 @@ const UpdateUser = () => {
         <div className="flex items-center justify-center ">
           <a className="relative inline-flex items-center justify-center w-36 text-lg text-white border-2 border-white rounded bg-emerald-500">
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSWEO9LwiEEhDFqIHon1zA6z1MZCTkkRvvAA&s"
+              src={datas?.image}
               alt=""
             />
           </a>
@@ -61,8 +64,9 @@ const UpdateUser = () => {
             <Input
               // name="name"
               placeholder="Update your name"
-              //   value={user.name}
+              defaultValue={datas?.name}
               //   onChange={handleChange}
+
               required
               {...register("name")}
             />
@@ -75,6 +79,36 @@ const UpdateUser = () => {
               value={user?.email}
               //   onChange={handleChange}
               required
+            />
+          </div>
+          <div className="w-full">
+            <Label>City</Label>
+            <Input
+              type="city"
+              defaultValue={datas?.city}
+              {...register("city")}
+
+              //   onChange={handleChange}
+            />
+          </div>
+          <div className="w-full">
+            <Label>Address</Label>
+            <Input
+              type="address"
+              // {...register("email")}
+              defaultValue={datas?.address}
+              //   onChange={handleChange}
+              {...register("address")}
+            />
+          </div>
+          <div className="w-full">
+            <Label>Phone</Label>
+            <Input
+              type="phone"
+              // {...register("email")}
+              defaultValue={datas?.phone}
+              //   onChange={handleChange}
+              {...register("phone")}
             />
           </div>
         </div>

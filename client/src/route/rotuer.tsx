@@ -12,6 +12,7 @@ import CardDetails from "@/pages/card/CardDetails";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Home from "@/pages/Home";
+import ImageUpload from "@/pages/ImageUpload";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Service from "@/pages/Service";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <ProtectedRoutes> <Checkout></Checkout></ProtectedRoutes>
+      },
+      {
+        path: "/imageUpload",
+        element: <ImageUpload></ImageUpload>
       },
     ],
   },
@@ -92,6 +97,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Overview />,
+      },
+      {
+        path: "profileSettings",
+        element: <ProfileSettings />,
       },
     ],
   },

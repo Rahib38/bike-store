@@ -46,7 +46,9 @@ const AllUser = () => {
 
   return (
     <div className="w-full mt-5">
-       <Helmet><title>RideOn Wheels | Admin All Users</title></Helmet>
+      <Helmet>
+        <title>RideOn Wheels | Admin All Users</title>
+      </Helmet>
       <div className="flex justify-end"></div>
       <table className="w-full text-left mt-5 border border-separate rounded border-slate-200">
         <tbody>
@@ -113,7 +115,7 @@ const AllUser = () => {
                   </button>
                 ) : (
                   <button onClick={() => handleUserUpdate(item?._id)}>
-                    Deactive
+                    <span className="text-red-400">Deactive</span>
                   </button>
                 )}
               </td>
