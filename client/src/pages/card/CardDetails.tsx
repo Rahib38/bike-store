@@ -36,7 +36,7 @@ const CardDetails = () => {
             {singleProduct?.data?.name}
           </h1>
           <p className="text-lg text-gray-700 mt-2">
-            {singleProduct?.data?.description}
+            {singleProduct?.data?.description.slice(0,100)}
           </p>
           <p className="text-2xl font-bold text-gray-900 mt-4">
             ${singleProduct?.data?.price}
@@ -48,8 +48,7 @@ const CardDetails = () => {
           <div>
             {/* Main Product Image */}
             <img
-              src="https://imgd.aeplcdn.com/1056x594/n/bw/models/colors/yamaha-select-model-metallic-red-1704802630538.png?q=80"
-              alt="Mountain Bike X2000"
+              src={singleProduct?.data?.image}
               className="w-full rounded-lg shadow-lg"
             />
             {/* Image Thumbnails */}
@@ -65,20 +64,26 @@ const CardDetails = () => {
               {singleProduct?.data?.description}
             </p>
             <p className="text-lg text-gray-700 mb-6">
-              Brand: {singleProduct?.data?.brand}
+              <span className="text-xl font-semibold text-gray-800 mb-4">Brand:</span> {singleProduct?.data?.brand}
             </p>
             <p className="text-lg text-gray-700 mb-6">
-              Category: {singleProduct?.data?.category}
+            <span className="text-xl font-semibold text-gray-800 mb-4">Category:</span>  {singleProduct?.data?.category}
             </p>
           </div>
         </div>
 
         {/* Add to Cart & Wishlist */}
-        <div className="flex items-center justify-end mt-8">
-          <Link to={"/cart"}>
+        <div className="flex items-center justify-between mt-8">
+          
             <Button onClick={handleAddToCart} className="bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 focus:outline-none">
               <FaShoppingCart className="mr-2" />
               Add to Cart
+            </Button>
+       
+          <Link to={"/cart"}>
+            <Button onClick={handleAddToCart} className="bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 focus:outline-none">
+              <FaShoppingCart className="mr-2" />
+              Order Now
             </Button>
           </Link>
         </div>
