@@ -23,7 +23,7 @@
 
 ## 💻 TECH STACK
 
-- 🚀 **Frontend:** React.js, Tailwind CSS
+- 🚀 **Frontend:** React.js,Redux, Tailwind CSS
 - 🚀 **Backend:** Node.js, Express.js
 - 🚀 **Database:** MongoDB
 - 🚀 **Authentication:** JWT
