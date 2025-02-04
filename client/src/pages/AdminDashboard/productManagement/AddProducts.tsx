@@ -40,22 +40,21 @@ const AddProducts = () => {
 
   const onSubmit = async (data: FieldValues) => {
     try {
+      if (!image) return alert("Select your image first");
+      const formData = new FormData();
 
-if(!image) return alert("Select your image first")
-  const formData=new FormData()
+      formData.append("file", image);
+      formData.append("upload_preset", "Rahib38");
 
-formData.append("file",image)
-formData.append("upload_preset", "Rahib38")
-
-const response = await axios.post(
-  "https://api.cloudinary.com/v1_1/drcynlax7/image/upload", // Replace with your Cloudinary cloud name
-  formData
-);
-const imageUrl=response.data.secure_url
-const productData={
-  ...data,
-  image:imageUrl
-}
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/drcynlax7/image/upload", // Replace with your Cloudinary cloud name
+        formData
+      );
+      const imageUrl = response.data.secure_url;
+      const productData = {
+        ...data,
+        image: imageUrl,
+      };
 
       const result = await addProduct(productData);
       if (result.error) {
@@ -76,7 +75,6 @@ const productData={
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className=" w-full  rounded-md p-6 shadow">
-      
             <div>
               <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 ">
                 <div className="flex flex-col md:flex-row gap-2">
@@ -95,7 +93,7 @@ const productData={
                     />
                     {errors.name && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message}
+                        {errors?.name?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -111,7 +109,7 @@ const productData={
                     />
                     {errors.brand && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message}
+                        {errors?.name?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -131,7 +129,7 @@ const productData={
                     />
                     {errors.image && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message}
+                        {errors?.image?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -147,9 +145,9 @@ const productData={
                       placeholder="Enter your price"
                       {...register("price", { required: "Price is required" })}
                     />
-                    {errors.name && (
+                    {errors.price && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.price?.message}
+                        {errors?.price?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -167,7 +165,7 @@ const productData={
                     />
                     {errors.quantity && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.quantity?.message}
+                        {errors?.quantity?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -212,7 +210,7 @@ const productData={
                       </svg>
                       {errors.category && (
                         <p className="text-red-500 text-sm mt-1">
-                          {errors?.category?.message}
+                          {errors?.category?.message?.toString()}
                         </p>
                       )}
                     </div>
@@ -222,7 +220,7 @@ const productData={
                   <textarea
                     id="description"
                     type="text"
-                    placeholder="Write your message"
+                    placeholder="Write your message?.toString()"
                     className="peer relative w-full rounded border border-slate-200 px-4 py-2 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
                     {...register("description", {
                       required: "Description is required",
@@ -232,16 +230,19 @@ const productData={
                     htmlFor="id-01"
                     className="absolute left-2 -top-2 z-[1] cursor-text px-2 text-xs text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-required:after:text-pink-500 peer-required:after:content-['\00a0*'] peer-invalid:text-pink-500 peer-focus:-top-2 peer-focus:cursor-default peer-focus:text-xs peer-focus:text-emerald-500 peer-invalid:peer-focus:text-pink-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent"
                   >
-                    Write your message
+                    Write your message?.toString()
                   </label>
                   {errors.description && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors?.description?.message}
+                      {errors?.description?.message?.toString()}
                     </p>
                   )}
                 </div>
 
-                <Button type="submit" className="mt-2 w-full bg-emerald-500 hover:bg-emerald-500">
+                <Button
+                  type="submit"
+                  className="mt-2 w-full bg-emerald-500 hover:bg-emerald-500"
+                >
                   Add Product
                 </Button>
               </form>

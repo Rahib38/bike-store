@@ -3,11 +3,13 @@ import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
 } from "@/Redux/Features/Admin/adminManagement";
+import { Helmet } from "react-helmet";
 import { AiOutlineDelete } from "react-icons/ai";
+import { FaCheck } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 import { toast } from "sonner";
 import AddModal from "./AddModal";
 import UpdateModal from "./UpdateModal";
-import { Helmet } from "react-helmet";
 
 // interface data {
 //   _id: string;
@@ -17,13 +19,15 @@ const AllProducts = () => {
   const { data: productsData } = useGetAllProductsQuery(undefined);
   const [productDelete] = useDeleteProductMutation();
   const data = productsData?.data?.map(
-    ({ _id, name, brand, price, quantity, category }) => ({
+    ({ _id, name, brand, price, quantity, category, inStock ,image}) => ({
       _id: _id,
       name: name,
       brand: brand,
       price: price,
       quantity: quantity,
       category: category,
+      inStock: inStock,
+      image: image,
     })
   );
   // setParams(data)
@@ -46,7 +50,9 @@ const AllProducts = () => {
 
   return (
     <div className="w-full mt-5">
-         <Helmet><title>RideOn Wheels | Admin All Products</title></Helmet>
+      <Helmet>
+        <title>RideOn Wheels | Admin All Products</title>
+      </Helmet>
       <div className="flex justify-end">
         <AddModal />
       </div>
@@ -54,8 +60,8 @@ const AllProducts = () => {
         <tbody>
           <tr>
             <th
-              scope="col"
-              className="hidden h-12 px-6 text-sm font-medium border-l sm:table-cell first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100"
+              
+             
             ></th>
             <th
               scope="col"
@@ -91,15 +97,19 @@ const AllProducts = () => {
               scope="col"
               className="hidden h-12 px-6 text-sm font-medium border-l sm:table-cell first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100"
             >
+              InStock
+            </th>
+            <th
+              scope="col"
+              className="hidden h-12 px-6 text-sm font-medium border-l sm:table-cell first:border-l-0 stroke-slate-700 text-slate-700 bg-slate-100"
+            >
               Action
             </th>
           </tr>
           {data?.map((item) => (
             <tr className="block border-b sm:table-row last:border-b-0 border-slate-200 sm:border-none">
-              <td
-                className="before:w-24 before:inline-block before:font-medium before:text-slate-700  sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
-              >
-                img
+              <td className="before:w-24 before:inline-block before:font-medium before:text-slate-700  sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
+            <img className="w-20" src={item?.image} alt="" />
               </td>
               <td
                 data-th="Product Name"
@@ -117,7 +127,7 @@ const AllProducts = () => {
                 data-th="Price"
                 className="before:w-24 before:inline-block before:font-medium before:text-slate-700 before:content-[attr(data-th)':'] sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
               >
-                {item.price}
+                ${item.price}
               </td>
               <td
                 data-th="Quantity"
@@ -132,13 +142,18 @@ const AllProducts = () => {
                 {item.category}
               </td>
               <td
+                className="before:w-24 before:inline-block before:font-medium before:text-slate-700 before:content-[attr(data-th)':'] sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500  "
+              >
+                {item?.inStock ? <FaCheck /> : <RxCross1 />}
+              </td>
+              <td
                 data-th="Action"
                 className="before:w-24 before:inline-block before:font-medium before:text-slate-700 before:content-[attr(data-th)':'] sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
               >
                 <div className="flex gap-5">
                   <div>
                     {/* <FaRegEdit className="text-emerald-500" /> */}
-                    <UpdateModal productId={item?._id}  ></UpdateModal>
+                    <UpdateModal productId={item?._id}></UpdateModal>
                   </div>
                   <div>
                     <AiOutlineDelete

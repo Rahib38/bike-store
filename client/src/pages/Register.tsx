@@ -3,34 +3,34 @@ import { FieldValues, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "@/Redux/Features/Auth/AuthApi";
-import { toast } from "sonner";
 import { Helmet } from "react-helmet";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Register = () => {
-  const navigate=useNavigate()
-  const [registers]=useRegisterMutation()
+  const navigate = useNavigate();
+  const [registers] = useRegisterMutation();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit =async (data:FieldValues) => {
-    try{
-      const result = await registers(data)
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const result = await registers(data);
       if (result.error) {
         toast.error("Email already exists");
       } else {
         toast.success("Signed up successfully", { duration: 2000 });
         // form.reset();
-        navigate('/login')
+        navigate("/login");
       }
-      console.log(result,"resigter")
+      console.log(result, "resigter");
       console.log(data);
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
       if ((err as any).statusCode == 409) {
         toast.error("ALready signed up use this Email");
       } else {
@@ -41,42 +41,32 @@ const Register = () => {
 
   return (
     <section className="py-32 max-h-full">
-         <Helmet><title>RideOn Wheels | Register</title></Helmet>
+      <Helmet>
+        <title>RideOn Wheels | Register</title>
+      </Helmet>
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className="mx-auto w-full max-w-sm rounded-md p-6 shadow">
             <div className="mb-6 flex flex-col items-center">
-              <a href="https://shadcnblocks.com">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  alt="logo"
-                  className="mb-7 h-10 w-auto"
-                />
-              </a>
-              <p className="mb-2 text-2xl font-bold">Shadcnblocks.com</p>
-              <p className="text-muted-foreground">
-                Please enter your details.
-              </p>
+        
+              <p className="mb-2 text-2xl font-bold"> Welcome!! Please Register</p>
+         
             </div>
             <div>
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="grid gap-4 "
-              >
+              <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 ">
                 <div>
                   <label className="text-sm font-medium " htmlFor="name">
                     Name
                   </label>
                   <Input
-                  id="name"
+                    id="name"
                     type="text"
                     placeholder="Enter your name"
                     {...register("name", { required: "Name is required" })}
-
                   />
-                      {errors.name && (
+                  {errors.name && (
                     <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message }
+                      {errors.name.message?.toString()}
                     </p>
                   )}
                 </div>
@@ -96,11 +86,10 @@ const Register = () => {
                         message: "Invalid email address",
                       },
                     })}
-                    
                   />
-                     {errors.email && (
+                  {errors.email && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.email.message}
+                      {errors.email.message?.toString()}
                     </p>
                   )}
                 </div>
@@ -120,9 +109,9 @@ const Register = () => {
                       },
                     })}
                   />
-                      {errors.password && (
+                  {errors.password && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors?.password?.message}
+                      {errors?.password?.message?.toString()}
                     </p>
                   )}
                 </div>
