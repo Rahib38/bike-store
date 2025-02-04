@@ -56,19 +56,7 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className=" w-full  rounded-md p-6 shadow">
-            <div className="mb-6 flex flex-col items-center">
-              <a href="https://shadcnblocks.com">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  alt="logo"
-                  className="mb-7 h-10 w-auto"
-                />
-              </a>
-              <p className="mb-2 text-2xl font-bold">Shadcnblocks.com</p>
-              <p className="text-muted-foreground">
-                Please enter your details.
-              </p>
-            </div>
+       
             <div>
               <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 ">
                 <div className="flex flex-col md:flex-row gap-2">
@@ -87,7 +75,7 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                     />
                     {errors.name && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message } 
+                        {errors?.name?.message?.toString() } 
                       </p>
                     )}
                   </div>
@@ -103,7 +91,7 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                     />
                     {errors.brand && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.name?.message}
+                        {errors?.brand?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -119,9 +107,9 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                       placeholder="Enter your price"
                       {...register("price", { required: "Price is required" })}
                     />
-                    {errors.name && (
+                    {errors.price && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.price?.message}
+                        {errors?.price?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -139,7 +127,7 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                     />
                     {errors.quantity && (
                       <p className="text-red-500 text-sm mt-1">
-                        {errors?.quantity?.message}
+                        {errors?.quantity?.message?.toString()}
                       </p>
                     )}
                   </div>
@@ -184,7 +172,7 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                       </svg>
                       {errors.category && (
                         <p className="text-red-500 text-sm mt-1">
-                          {errors?.category?.message}
+                          {errors?.category?.message?.toString()}
                         </p>
                       )}
                     </div>
@@ -194,7 +182,7 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                   <textarea
                     id="description"
                     type="text"
-                    placeholder="Write your message"
+                    placeholder="Write your message?.toString()"
                     className="peer relative w-full rounded border border-slate-200 px-4 py-2 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
                     {...register("description", {
                       required: "Description is required",
@@ -208,12 +196,12 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                   </label>
                   {errors.description && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors?.description?.message}
+                      {errors?.description?.message?.toString()}
                     </p>
                   )}
                 </div>
 
-                <Button type="submit" className="mt-2 w-full">
+                <Button type="submit" className="mt-2 w-full bg-emerald-500 hover:bg-emerald-500">
                   Update Product
                 </Button>
               </form>

@@ -1,6 +1,8 @@
 import { Tuser } from "@/components/ProfileDropDown";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   useUserQuery,
   useUserUpdateMutation,
@@ -8,117 +10,160 @@ import {
 import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
 import { useAppSelector } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
-import { Label } from "@radix-ui/react-dropdown-menu";
+import axios from "axios";
+import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const UpdateUser = () => {
+  const [image, setImage] = useState<File | null>(null);
   const [userUpdate] = useUserUpdateMutation();
-  const { id } = useParams();
-  console.log(id);
 
   const token = useAppSelector(useCurrentToken);
   let user;
   if (token) {
     user = verifyToken(token) as Tuser;
   }
-  const { data: singleData } = useUserQuery(user?._id);
+
+  const { data: singleData, isLoading } = useUserQuery(user?._id);
   const datas = singleData?.data;
 
   const { register, handleSubmit, reset } = useForm();
-
-  const onSubmit = async (data: FieldValues) => {
-    console.log("sn", data);
-    try {
-      const res = await userUpdate(data);
-      console.log(res);
-      if (res?.error) {
-        toast.error("please enter current name.");
-      } else {
-        toast.success("update user successfully", { duration: 2000 });
-        reset();
-      }
-    } catch (err) {
-      console.log("e", err);
-      toast.error("something went wrong");
-    }
-    console.log(data);
+  const handleImageChange = (file: File) => {
+    setImage(file);
   };
 
-  // console.log(userUpdate);
+  const onSubmit = async (data: FieldValues) => {
+    // const updatedFields: Record<string, any> = {};
+    // Object.keys(data).forEach((key) => {
+    //   if (data[key] !== datas?.[key] && key !== "email") {
+    //     updatedFields[key] = data[key];
+    //   }
+    // });
+
+    // if (Object.keys(updatedFields).length === 0) {
+    //   toast.info("No changes detected.");
+    //   return;
+    // }
+
+    try {
+      if (!image) return alert("Select your image first");
+      const formData = new FormData();
+
+      formData.append("file", image);
+      formData.append("upload_preset", "Rahib38");
+
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/drcynlax7/image/upload", // Replace with your Cloudinary cloud name
+        formData
+      );
+      const imageUrl = response.data.secure_url;
+      const productData = {
+        ...data,
+        // updatedFields,
+        image: imageUrl,
+      };
+      const res = await userUpdate(productData);
+      if (res?.error) {
+        toast.error("Please enter a valid input.");
+      } else {
+        toast.success("User updated successfully!", { duration: 2000 });
+        // reset({ ...datas, ...updatedFields });
+      }
+    } catch (err) {
+      toast.error("Something went wrong.");
+    }
+  };
+  if (isLoading) {
+    return " loading....";
+  }
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex items-center justify-center ">
-          <a className="relative inline-flex items-center justify-center w-36 text-lg text-white border-2 border-white rounded bg-emerald-500">
-            <img
-              src={datas?.image}
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="flex flex-col md:flex-row gap-4 mt-5">
-          <div className="w-full">
-            <Label>Name</Label>
-            <Input
-              // name="name"
-              placeholder="Update your name"
-              defaultValue={datas?.name}
-              //   onChange={handleChange}
-
-              required
-              {...register("name")}
-            />
+    <Card className="max-w-2xl mx-auto mt-10 p-6 shadow-lg">
+      <CardHeader>
+        <CardTitle className="text-center">Update Profile</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="flex items-center justify-center">
+            <div className="w-36 h-36 rounded-full overflow-hidden border-2 border-gray-300">
+              <img
+                src={datas?.image}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
-          <div className="w-full">
-            <Label>Email</Label>
-            <Input
-              type="email"
-              // {...register("email")}
-              value={user?.email}
-              //   onChange={handleChange}
-              required
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Update your name"
+                defaultValue={datas?.name}
+                {...register("name")}
+              />
+            </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                defaultValue={datas?.email}
+                disabled
+              />
+            </div>
+            <div className="w-full">
+              <label className="text-sm font-medium " htmlFor="image">
+                Image
+              </label>
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    handleImageChange(file); // Store the selected file in state
+                  }
+                }}
+              />
+            </div>
+            <div>
+              <Label htmlFor="city">City</Label>
+              <Input
+                id="city"
+                type="text"
+                defaultValue={datas?.city}
+                {...register("city")}
+              />
+            </div>
+            <div>
+              <Label htmlFor="address">Address</Label>
+              <Input
+                id="address"
+                type="text"
+                defaultValue={datas?.address}
+                {...register("address")}
+              />
+            </div>
+            <div>
+              <Label htmlFor="phone">Phone</Label>
+              <Input
+                id="phone"
+                type="number"
+                defaultValue={datas?.phone}
+                {...register("phone")}
+              />
+            </div>
           </div>
-          <div className="w-full">
-            <Label>City</Label>
-            <Input
-              type="city"
-              defaultValue={datas?.city}
-              {...register("city")}
-
-              //   onChange={handleChange}
-            />
+          <div className="flex justify-end">
+            <Button type="submit" className="bg-emerald-500">
+              Update Profile
+            </Button>
           </div>
-          <div className="w-full">
-            <Label>Address</Label>
-            <Input
-              type="address"
-              // {...register("email")}
-              defaultValue={datas?.address}
-              //   onChange={handleChange}
-              {...register("address")}
-            />
-          </div>
-          <div className="w-full">
-            <Label>Phone</Label>
-            <Input
-              type="phone"
-              // {...register("email")}
-              defaultValue={datas?.phone}
-              //   onChange={handleChange}
-              {...register("phone")}
-            />
-          </div>
-        </div>
-        <div className="flex justify-end mt-5">
-          <Button type="submit" className="bg-emerald-500">
-            Update Profile
-          </Button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 
