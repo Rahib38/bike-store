@@ -1,16 +1,14 @@
-import { FcGoogle } from "react-icons/fc";
-
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { useLoginMutation } from "@/Redux/Features/Auth/AuthApi";
 import { setUser } from "@/Redux/Features/Auth/AuthSlice";
+import { useAppDispatch } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
+import { Helmet } from "react-helmet";
 import { FieldValues, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useAppDispatch } from "@/Redux/hooks";
-import { Helmet } from "react-helmet";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,30 +30,22 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.token);
       dispatch(setUser({ user: user, token: res?.data.token }));
-      toast.success('Logged in',{id:toastId,duration:2000})
-      navigate('/')
-    } catch  {
-      toast.error('Something went wrong', { id: toastId, duration: 2000 });
+      toast.success("Logged in", { id: toastId, duration: 2000 });
+      navigate("/");
+    } catch {
+      toast.error("Something went wrong", { id: toastId, duration: 2000 });
     }
   };
   return (
     <section className="py-32 max-h-full">
-         <Helmet><title>RideOn Wheels | Login</title></Helmet>
+      <Helmet>
+        <title>RideOn Wheels | Login</title>
+      </Helmet>
       <div className="container mx-auto ">
         <div className="flex flex-col gap-4">
           <div className="mx-auto w-full max-w-sm rounded-md p-6 shadow">
             <div className="mb-6 flex flex-col items-center">
-              <a href="https://shadcnblocks.com">
-                <img
-                  src="https://shadcnblocks.com/images/block/block-1.svg"
-                  alt="logo"
-                  className="mb-7 h-10 w-auto"
-                />
-              </a>
-              <p className="mb-2 text-2xl font-bold">Shadcnblocks.com</p>
-              <p className="text-muted-foreground">
-                Please enter your details.
-              </p>
+              <p className="mb-2 text-2xl font-bold">Please Login</p>
             </div>
             <div>
               <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
@@ -74,7 +64,7 @@ const Login = () => {
                   />
                   {errors.email && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.email.message}
+                      {errors.email.message?.toString()}
                     </p>
                   )}
                 </div>
@@ -92,7 +82,7 @@ const Login = () => {
                   />
                   {errors.password && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.password.message}
+                      {errors.password.message?.toString()}
                     </p>
                   )}
                 </div>
@@ -116,10 +106,10 @@ const Login = () => {
                 <Button type="submit" className="mt-2 w-full">
                   Sign in account
                 </Button>
-                <Button variant="outline" className="w-full">
+                {/* <Button variant="outline" className="w-full">
                   <FcGoogle className="mr-2 size-5" />
                   Sign up with Google
-                </Button>
+                </Button> */}
               </form>
               <div className="mx-auto mt-8 flex justify-center gap-1 text-sm text-muted-foreground">
                 <p>Don&apos;t have an account?</p>

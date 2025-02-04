@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
-  const { carts, selectedItems, totalPrice } = useAppSelector(
-    (state) => state.product
-  );
+  const { carts } = useAppSelector((state) => state.product);
   console.log(carts);
 
-  // const totalPrice = cartItems.reduce(
-  //   (total, item) => total + item.price * item.quantity,
-  //   0
-  // );
+  const totalPrice = carts.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   const handleQuantityChange = (id: string, type: string) => {
     dispatch(updateCart({ type, id }));
@@ -26,7 +24,9 @@ const Cart = () => {
 
   return (
     <div className="bg-gray-50 py-12">
-         <Helmet><title>RideOn Wheels | Cart</title></Helmet>
+      <Helmet>
+        <title>RideOn Wheels | Cart</title>
+      </Helmet>
       <div className="max-w-screen-xl mx-auto px-6">
         {/* Header */}
         <h1 className="text-4xl font-bold text-emerald-600 text-center mb-12">
@@ -163,9 +163,11 @@ const Cart = () => {
                 <p className="text-xl font-semibold text-gray-800">
                   Total: ${totalPrice.toFixed(2)}
                 </p>
-                <button className="bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none">
-                  <Link to="/checkout"> Checkout Now</Link>
-                </button>
+                <Link to="/checkout">
+                  <button className="bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none">
+                    Checkout Now
+                  </button>
+                </Link>
               </div>
             </>
           ) : (
@@ -173,9 +175,11 @@ const Cart = () => {
               <p className="text-lg text-gray-700">
                 Your cart is currently empty!
               </p>
-              <button className="mt-4 bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none">
-                <Link to={"/allProduct"}> Continue Shopping</Link>
-              </button>
+              <Link to={"/allProduct"}>
+                <button className="mt-4 bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none">
+                  Continue Shopping
+                </button>
+              </Link>
             </div>
           )}
         </div>
