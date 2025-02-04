@@ -14,7 +14,7 @@ const Cards = () => {
   console.log(sProductData);
 
   const productData = sProductData?.data?.map(
-    ({ _id, name, brand, price, quantity, category, description }) => ({
+    ({ _id, name, brand, price, quantity, category, description, image }) => ({
       _id: _id,
       name: name,
       brand: brand,
@@ -22,6 +22,7 @@ const Cards = () => {
       quantity: quantity,
       category: category,
       description: description,
+      image: image,
     })
   );
   console.log(productData);
@@ -29,14 +30,17 @@ const Cards = () => {
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 container mx-auto mt-8">
       {productData?.map((item) => (
         <Card>
-          <img
-            src="https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-hunter-350-retro-factory1727790756803.jpg?q=80"
-            alt=""
-          />
+          <img src={item.image} alt="" />
           <CardHeader>
             <CardTitle>{item?.name}</CardTitle>
 
-            <CardDescription>{item?.description}</CardDescription>
+            <CardDescription className="font-bold">
+            
+              <span className=" font-semibold text-gray-800 mb-4">
+                Brand:
+              </span>
+              {item?.brand}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <p>price: ${item?.price}</p>
