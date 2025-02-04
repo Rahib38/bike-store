@@ -29,6 +29,8 @@ export default function Navbar() {
     localStorage.setItem("isLoggedIn", "true"); // Persist login state
   };
 
+  const item = useAppSelector((state) => state.product?.selectedItems);
+
   return (
     <>
       {/*<!-- Component: Navbar with Avatar --> */}
@@ -199,7 +201,12 @@ export default function Navbar() {
                       }
                       to={"/cart"}
                     >
-                      <FaCartPlus />
+                      <div className="relative">
+                        <FaCartPlus />
+                        <div className="absolute -top-3 -right-3">
+                          <p>{isUserLogin?item:0}</p>
+                        </div>
+                      </div>
                     </NavLink>
                   </span>
                 </a>
