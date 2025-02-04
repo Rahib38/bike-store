@@ -15,6 +15,12 @@ const adminNavItems = [
     link: "/userDashboard",
     path: "/userDashboard",
   },
+  {
+    title: "My Profile",
+    icons: <FaHome className="mr-2" />,
+    link: "profileSettings",
+    path: "/userDashboard/profileSettings",
+  },
 
   // {
   //   title: "All Products",

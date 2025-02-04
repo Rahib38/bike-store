@@ -108,11 +108,7 @@ const AdminDashboardLayout = () => {
           </button>
           {/* User Avatar */}
           <div className="hidden lg:flex items-center space-x-4">
-            <img
-              src="https://i.pravatar.cc/40"
-              alt="User Avatar"
-              className="w-10 h-10 rounded-full border-2 border-white"
-            />
+     
             <span className="text-white font-semibold">{user?.email}</span>
           </div>
         </header>
