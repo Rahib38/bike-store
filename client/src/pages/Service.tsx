@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 
 const Service = () => {
   const [faqOpen, setFaqOpen] = useState(null);
 
-  const toggleFaq = (index) => {
+  const toggleFaq = (index:any) => {
     setFaqOpen(faqOpen === index ? null : index);
   };
 
@@ -145,7 +146,7 @@ const Service = () => {
               </label>
               <textarea
                 id="message"
-                rows="4"
+          
                 className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-emerald-300"
                 placeholder="Write your message here"
               ></textarea>

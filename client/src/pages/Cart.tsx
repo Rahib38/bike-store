@@ -1,4 +1,4 @@
-import { removeCart, updateCart } from "@/Redux/Features/Admin/productSlice";
+import { removeCart, updateCart } from "@/Redux/Features/Admin/ProductSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";

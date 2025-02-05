@@ -2,17 +2,17 @@ import { Button } from "@/components/ui/button";
 import { useSingleProductQuery } from "@/Redux/Features/Admin/adminManagement";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import { Tproduct } from "../AdminDashboard/productManagement/AddProducts";
 import { useAppDispatch } from "@/Redux/hooks";
-import { addCart } from "@/Redux/Features/Admin/productSlice";
+import { addCart } from "@/Redux/Features/Admin/ProductSlice";
 import { toast } from "sonner";
 import { Helmet } from "react-helmet";
+import { TProduct } from "../AdminDashboard/productManagement/AddProducts";
 
 const CardDetails = () => {
   const { id } = useParams();
   const dispatch=useAppDispatch()
   const { data: singleProduct } = useSingleProductQuery(id);
-  const bike:Tproduct=singleProduct?.data
+  const bike:TProduct=singleProduct?.data
 
 
   const handleAddToCart=()=>{

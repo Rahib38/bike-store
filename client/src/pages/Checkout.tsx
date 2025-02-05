@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tuser } from "@/components/ProfileDropDown";
 import { Button } from "@/components/ui/button";
@@ -30,15 +31,15 @@ const Checkout = () => {
   }
 
   const { carts } = useAppSelector((state) => state?.product);
-  console.log(carts,'carts')
+  console.log(carts, "carts");
   const { data: singleData, isLoading } = useUserQuery(user?._id);
   const datas = singleData?.data;
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handlePlaceOrder = async () => {
     console.log("object", sData);
-    await orderProduct({products:carts});
+    await orderProduct({ products: carts });
   };
   const toastId = "cart";
   useEffect(() => {
@@ -53,9 +54,9 @@ const Checkout = () => {
         console.log(sData?.data, "sData");
       }
     }
-console.log(error,'befor')
+    console.log(error, "befor");
     if (isError) toast.error(JSON.stringify(error), { id: toastId });
-    console.log(error,'after')
+    console.log(error, "after");
   }, [sData?.data, sData?.message, error, isError, orderLoading, isSuccess]);
 
   const onSubmit = async (data: FieldValues) => {
@@ -82,7 +83,7 @@ console.log(error,'befor')
         }, 1000);
         // reset({ ...datas, ...updatedFields });
       }
-    } catch (err) {
+    } catch (err: any) {
       toast.error("Something went wrong.");
     }
   };
@@ -116,7 +117,7 @@ console.log(error,'befor')
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name">Name</Label>
+                    <Label>Name</Label>
                     <Input
                       id="name"
                       type="text"
@@ -126,7 +127,7 @@ console.log(error,'befor')
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email">Email</Label>
+                    <Label>Email</Label>
                     <Input
                       id="email"
                       type="email"
@@ -135,7 +136,7 @@ console.log(error,'befor')
                     />
                   </div>
                   <div>
-                    <Label htmlFor="city">City</Label>
+                    <Label>City</Label>
                     <Input
                       id="city"
                       type="text"
@@ -144,7 +145,7 @@ console.log(error,'befor')
                     />
                   </div>
                   <div>
-                    <Label htmlFor="address">Address</Label>
+                    <Label>Address</Label>
                     <Input
                       id="address"
                       type="text"
@@ -153,7 +154,7 @@ console.log(error,'befor')
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone</Label>
+                    <Label>Phone</Label>
                     <Input
                       id="phone"
                       type="number"

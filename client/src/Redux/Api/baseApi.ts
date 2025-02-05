@@ -13,7 +13,7 @@ import { logout, setUser } from "../Features/Auth/AuthSlice";
 import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5001/api",
+  baseUrl: `${import.meta.env.VITE_REACT_APP_SERVER_URI}/api`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -31,11 +31,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    toast.error(result?.error?.data?.message);
+    toast.error((result?.error?.data as {message:string})?.message as string);
   }
 
   if (result?.error?.status === 401) {
-    const res = await fetch("http://localhost:5001/api/auth/refresh-token", {
+    const res = await fetch(`${import.meta.env.VITE_REACT_APP_SERVER_URI}/api/auth/refresh-token` ,{
       method: "POST",
       credentials: "include",
     });

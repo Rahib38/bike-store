@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import { baseApi } from './Api/baseApi'
 import authSlice from './Features/Auth/AuthSlice'
-import productSlice from './Features/Admin/productSlice'
+import productSlice from './Features/Admin/ProductSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer,FLUSH,
     REHYDRATE,

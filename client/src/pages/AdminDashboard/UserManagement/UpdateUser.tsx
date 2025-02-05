@@ -29,7 +29,7 @@ const UpdateUser = () => {
   const { data: singleData, isLoading } = useUserQuery(user?._id);
   const datas = singleData?.data;
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const handleImageChange = (file: File) => {
     setImage(file);
   };

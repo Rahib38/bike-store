@@ -1,9 +1,10 @@
-import { Tproduct } from "@/pages/AdminDashboard/productManagement/AddProducts";
+
+import { TProduct } from "@/pages/AdminDashboard/productManagement/AddProducts";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
 type TinitialState = {
-  carts: Tproduct[];
+  carts: TProduct[];
   selectedItems: number;
   totalPrice: number;
 };
@@ -58,7 +59,7 @@ const productSlice = createSlice({
 });
 
 export const setSelectedItems = (state: TinitialState) =>
-  state.carts.reduce((total: number, cart: Tproduct) => {
+  state.carts.reduce((total: number, cart: TProduct) => {
     return Number(total + cart.quantity);
   }, 0);
 

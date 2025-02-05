@@ -180,9 +180,9 @@ const UpdateProduct = ({ productId }:{productId:string}) => {
                 </div>
                 <div className="relative">
                   <textarea
-                    id="description"
-                    type="text"
-                    placeholder="Write your message?.toString()"
+                
+               placeholder="Write your message"
+                    // placeholder="Write your message?.toString()"
                     className="peer relative w-full rounded border border-slate-200 px-4 py-2 text-sm text-slate-500 placeholder-transparent outline-none transition-all autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
                     {...register("description", {
                       required: "Description is required",
