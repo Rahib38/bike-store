@@ -15,10 +15,10 @@ const getBikeIntoDB = async (query: Record<string, unknown>) => {
     .filter()
     .sort();
   // const bikes=await BikeModel.find()
-  console.log(bikes);
+  // console.log(bikes);
 
   const result = await bikes.modelQuery
-  console.log('Direct Query Result:', result);
+  // console.log('Direct Query Result:', result);
 
   return result;
 };
@@ -30,7 +30,7 @@ const singleBikeIntoDB = async (_id: string) => {
 
 const updateBikeIntoDB = async (_id: string, bike: Bike) => {
   const result = await BikeModel.findByIdAndUpdate(_id, bike, { new: true });
-  console.log(result, _id, bike);
+  // console.log(result, _id, bike);
   return result;
 };
 
