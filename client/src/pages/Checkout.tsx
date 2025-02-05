@@ -1,54 +1,98 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tuser } from "@/components/ProfileDropDown";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { useCreateOrderMutation } from "@/Redux/Features/Admin/OrderApi";
-import { useUserQuery } from "@/Redux/Features/Auth/AuthApi";
+import {
+  useUserQuery,
+  useUserUpdateMutation,
+} from "@/Redux/Features/Auth/AuthApi";
 import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
 import { useAppSelector } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const Checkout = () => {
+  const [userUpdate] = useUserUpdateMutation();
+  const [
+    orderProduct,
+    { isLoading: orderLoading, isSuccess, error, isError, data: sData },
+  ] = useCreateOrderMutation();
   const token = useAppSelector(useCurrentToken);
   let user;
   if (token) {
     user = verifyToken(token) as Tuser;
   }
-  // console.log(user)
-  const { data: singleData } = useUserQuery(user?._id);
-  // console.log(singleData)
-  const [orderProduct]=useCreateOrderMutation()
-  // console.log(orderProduct)
 
   const { carts } = useAppSelector((state) => state?.product);
-  const {
-    register,
-    reset,
-    handleSubmit,
-  } = useForm();
-  const onSubmit = async (data: FieldValues) => {
-    try {
-      const result = await orderProduct(data) ;
-      console.log(result,"dkfkd")
-      if (result.error) {
-        toast.error("Failed to order");
-      } else {
-        toast.success("order successfully", { duration: 2000 });
-        reset();
+  console.log(carts,'carts')
+  const { data: singleData, isLoading } = useUserQuery(user?._id);
+  const datas = singleData?.data;
+
+  const { register, handleSubmit, reset } = useForm();
+
+  const handlePlaceOrder = async () => {
+    console.log("object", sData);
+    await orderProduct({products:carts});
+  };
+  const toastId = "cart";
+  useEffect(() => {
+    if (orderLoading) toast.loading("Processing ...", { id: toastId });
+
+    if (isSuccess) {
+      toast.success(sData?.message, { id: toastId });
+      if (sData?.data) {
+        setTimeout(() => {
+          window.location.href = sData.data;
+        }, 1000);
+        console.log(sData?.data, "sData");
       }
-      console.log(result, "addProduct");
-      console.log(data);
+    }
+console.log(error,'befor')
+    if (isError) toast.error(JSON.stringify(error), { id: toastId });
+    console.log(error,'after')
+  }, [sData?.data, sData?.message, error, isError, orderLoading, isSuccess]);
+
+  const onSubmit = async (data: FieldValues) => {
+    const updatedFields: Record<string, any> = {};
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== datas?.[key] && key !== "email") {
+        updatedFields[key] = data[key];
+      }
+    });
+
+    // if (Object.keys(updatedFields).length === 0) {
+    //   toast.info("No changes detected.");
+    //   return;
+    // }
+
+    try {
+      const res = await userUpdate(updatedFields);
+      if (res?.error) {
+        toast.error("Please enter a valid input.");
+      } else {
+        toast.success("User updated successfully!", { duration: 2000 });
+        setTimeout(() => {
+          handlePlaceOrder();
+        }, 1000);
+        // reset({ ...datas, ...updatedFields });
+      }
     } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong");
+      toast.error("Something went wrong.");
     }
   };
+  if (isLoading) {
+    return " loading....";
+  }
   const totalPrice = carts.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-
-
 
   return (
     <div className="bg-gray-50 py-12">
@@ -62,59 +106,70 @@ const Checkout = () => {
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Billing Details */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Billing Details
-            </h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-2">Name</label>
-                <input
-                  type="text"
-                  defaultValue={singleData?.data?.name}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Your Name"
-                  {...register('name')}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-2">Email</label>
-                <input
-                  type="email"
-                  value={singleData?.data?.email}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Your Email"
-                  {...register('email')}
-
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-2">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={singleData?.data?.address}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Your Address"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-2">Phone</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={singleData?.data?.phone}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Your Phone Number"
-                />
-              </div>
-              <button
-                className="mt-6 w-full bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 transition focus:outline-none"
-              >
-                Place Order
-              </button>
-            </form>
-          </div>
+          <Card className="p-6 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-center sr-only">
+                Update Profile
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Update your name"
+                      defaultValue={datas?.name}
+                      {...register("name")}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      defaultValue={datas?.email}
+                      disabled
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="city">City</Label>
+                    <Input
+                      id="city"
+                      type="text"
+                      defaultValue={datas?.city}
+                      {...register("city")}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="address">Address</Label>
+                    <Input
+                      id="address"
+                      type="text"
+                      defaultValue={datas?.address}
+                      {...register("address")}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      type="number"
+                      defaultValue={datas?.phone}
+                      {...register("phone")}
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <Button type="submit" className="bg-emerald-500">
+                    Place order now
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
 
           {/* Order Summary */}
           <div className="bg-white rounded-lg shadow-md p-6">

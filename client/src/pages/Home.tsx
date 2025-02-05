@@ -5,6 +5,7 @@ import ExtraSectionBike from "./home/ExtraSectionBike";
 import ExtraSectionShipping from "./home/ExtraSectionShipping";
 import PowerFulBike from "./home/PowerFulBike";
 import {Helmet} from "react-helmet";
+import TestimonialSection from "./home/TestimonialSection";
 
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
         <CardsHome />
       </div>
       <PowerFulBike></PowerFulBike>
+      <TestimonialSection></TestimonialSection>
     </div>
   );
 };
