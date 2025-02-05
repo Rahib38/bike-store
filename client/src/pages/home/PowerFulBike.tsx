@@ -3,7 +3,7 @@ import { FaCogs, FaMotorcycle } from "react-icons/fa";
 const PowerFulBike = () => {
   return (
     <div>
-      <div className="container mx-auto ">
+      <div className="container mx-auto mt-5">
         <div className="bg-white rounded-lg mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2  gap-6 items-center justify-between">
             <div className="space-y-5">
