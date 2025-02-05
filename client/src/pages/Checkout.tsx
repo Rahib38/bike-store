@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useCreateOrderMutation } from "@/Redux/Features/Admin/OrderApi";
+import { clearCart } from "@/Redux/Features/Admin/ProductSlice";
 import {
   useUserQuery,
   useUserUpdateMutation,
 } from "@/Redux/Features/Auth/AuthApi";
 import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
-import { useAppSelector } from "@/Redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useEffect } from "react";
@@ -29,7 +30,7 @@ const Checkout = () => {
   if (token) {
     user = verifyToken(token) as Tuser;
   }
-
+  const dispatch = useAppDispatch();
   const { carts } = useAppSelector((state) => state?.product);
   console.log(carts, "carts");
   const { data: singleData, isLoading } = useUserQuery(user?._id);
@@ -49,6 +50,8 @@ const Checkout = () => {
       toast.success(sData?.message, { id: toastId });
       if (sData?.data) {
         setTimeout(() => {
+          dispatch(clearCart());
+
           window.location.href = sData.data;
         }, 1000);
         console.log(sData?.data, "sData");
@@ -57,7 +60,7 @@ const Checkout = () => {
     console.log(error, "befor");
     if (isError) toast.error(JSON.stringify(error), { id: toastId });
     console.log(error, "after");
-  }, [sData?.data, sData?.message, error, isError, orderLoading, isSuccess]);
+  }, [sData?.data,dispatch, sData?.message, error, isError, orderLoading, isSuccess]);
 
   const onSubmit = async (data: FieldValues) => {
     const updatedFields: Record<string, any> = {};
@@ -107,7 +110,7 @@ const Checkout = () => {
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Billing Details */}
-          <Card className="p-6 shadow-lg">
+          <Card className="lg:p-6 shadow-lg">
             <CardHeader>
               <CardTitle className="text-center sr-only">
                 Update Profile

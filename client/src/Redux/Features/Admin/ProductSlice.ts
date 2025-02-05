@@ -54,7 +54,11 @@ const productSlice = createSlice({
         toast('Remove Cart')
         state.selectedItems=0
         state.totalPrice=0
-    }
+    },clearCart(state) {
+      state.carts = [];
+      state.selectedItems = 0;
+      state.totalPrice = 0;
+    },
   },
 });
 
@@ -68,5 +72,5 @@ export const setSelectedItems = (state: TinitialState) =>
 //     return Number(total + cart.quantity * cart.price);
 //   }, 0);
 
-export const { addCart,updateCart,removeCart } = productSlice.actions;
+export const { addCart,updateCart,removeCart,clearCart } = productSlice.actions;
 export default productSlice.reducer;
