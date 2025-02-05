@@ -29,7 +29,7 @@ const getAllBike = catchAsync(async (req: Request, res: Response) => {
 
 const singleGetBike =catchAsync( async (req: Request, res: Response) => {
   const productId = req.params.productId;
-  console.log(productId)
+  // console.log(productId)
   const result = await BikeService.singleBikeIntoDB(productId);
   sendResponse(res, {
     success: true,
@@ -40,7 +40,7 @@ const singleGetBike =catchAsync( async (req: Request, res: Response) => {
 });
 const updateBike =catchAsync( async (req: Request, res: Response) => {
   const productId = req.params.productId;
-  console.log(req.params);
+  // console.log(req.params);
   const body = req.body;
   const result = await BikeService.updateBikeIntoDB(productId, body);
   sendResponse(res, {
