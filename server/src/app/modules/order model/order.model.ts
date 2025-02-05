@@ -1,35 +1,58 @@
 import { model, Schema } from 'mongoose';
-import { Order } from './order.interface';
+// import { Order } from './order.interface';
 
-const orderSchema = new Schema<Order>(
+const orderSchema = new Schema(
+  // {
+  //   email: {
+  //     type: String,
+  //   },
+  //   product: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Bike',
+  //   },
+  //   quantity: {
+  //     type: Number,
+  //   },
+  //   totalPrice: {
+  //     type: Number,
+  //   },
+  // },
   {
-    email: {
-      type: String,
-      required: [true, 'Customer email is required'],
-      match: [
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        'Please provide a valid email address',
-      ], // Email format validation
-      trim: true, // Removes extra spaces
-    },
-    product: {
+    user: {
       type: Schema.Types.ObjectId,
-      ref: 'Bike',
-      required: [true, 'Product reference is required'],
+      ref: 'User',
+      required: true,
     },
-    quantity: {
-      type: Number,
-      required: [true, 'Quantity is required'],
-      min: [1, 'Quantity must be at least 1'],
-      validate: {
-        validator: Number.isInteger,
-        message: 'Quantity must be an integer',
+    products: [
+      {
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: 'products',
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
       },
-    },
+    ],
     totalPrice: {
       type: Number,
-      required: [true, 'Total price is required'],
-      min: [0, 'Total price cannot be negative'],
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+      default: 'Pending',
+    },
+    transaction: {
+      id: String,
+      transactionStatus: String,
+      bank_status: String,
+      sp_code: String,
+      sp_message: String,
+      method: String,
+      date_time: String,
     },
   },
   {
@@ -42,4 +65,4 @@ const orderSchema = new Schema<Order>(
   },
 );
 
-export const orderModel = model<Order>('Order', orderSchema);
+export const orderModel = model('Order', orderSchema);

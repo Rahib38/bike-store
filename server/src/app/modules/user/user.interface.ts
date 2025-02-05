@@ -1,4 +1,5 @@
 export type TUser = {
+  _id:string;
   name: string;
   email: string;
   password: string;
@@ -7,4 +8,5 @@ export type TUser = {
   city?: string;
   address?: string;
   phone?: string;
+  image?: string;
 };

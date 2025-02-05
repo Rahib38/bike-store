@@ -9,7 +9,16 @@ const userValidationSchema = z.object({
       .max(20, { message: 'Password can not be more than 20 character' }),
   }),
 });
-
+const userProfileValidationSchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+    image: z.string().optional(),
+    phone: z.string().optional(),
+    address:z.string().optional(),
+    city:z.string().optional(),
+  }),
+});
 export const userValidation = {
   userValidationSchema,
+  userProfileValidationSchema
 };

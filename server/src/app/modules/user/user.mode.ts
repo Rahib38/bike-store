@@ -14,6 +14,7 @@ const userSchema = new Schema<TUser>(
       unique: true,
       required: true,
     },
+
     city: {
       type: String,
       default: '',
@@ -31,6 +32,10 @@ const userSchema = new Schema<TUser>(
       required: true,
       trim: true,
       select: false,
+    },
+    image: {
+      type: String,
+      default: '',
     },
     role: {
       type: String,
