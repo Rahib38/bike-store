@@ -42,6 +42,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
 
 const updateUser =catchAsync(async(req:Request,res:Response)=>{
  const {_id}=req.user
+ console.log('id',req.user)
   const body=req.body
   const result= await AuthService.updateUser(_id,body)
   sendResponse(res,{

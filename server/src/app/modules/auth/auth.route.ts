@@ -24,7 +24,7 @@ authRouter.get(
 );
 authRouter.patch(
   '/user/updateProfile',auth("admin","customer"),
-
+validateRequest(userValidation.userProfileValidationSchema),
   AuthController.updateUser,
 );
 authRouter.post(
