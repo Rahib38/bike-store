@@ -2,7 +2,8 @@ import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
 import { useAppSelector } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import { useState } from "react";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaRegUserCircle } from "react-icons/fa";
+import { BiBorderAll } from "react-icons/bi";
 
 import { Helmet } from "react-helmet";
 import { Link, Outlet, useLocation } from "react-router-dom";
@@ -16,8 +17,14 @@ const adminNavItems = [
     path: "/userDashboard",
   },
   {
+    title: "My Order",
+    icons: <BiBorderAll className="mr-2" />,
+    link: "myOrder",
+    path: "/userDashboard/myOrder",
+  },
+  {
     title: "My Profile",
-    icons: <FaHome className="mr-2" />,
+    icons: <FaRegUserCircle className="mr-2" />,
     link: "profileSettings",
     path: "/userDashboard/profileSettings",
   },

@@ -2,12 +2,13 @@ import { useCurrentToken } from "@/Redux/Features/Auth/AuthSlice";
 import { useAppSelector } from "@/Redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import { useState } from "react";
-import { FaHome } from "react-icons/fa";
-import { MdGridView } from "react-icons/md";
+import { BiBorderAll } from "react-icons/bi";
+import { FaHome, FaRegUserCircle, FaUsers } from "react-icons/fa";
 
+import { Helmet } from "react-helmet";
+import { AiOutlineProduct } from "react-icons/ai";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Tuser } from "../ProfileDropDown";
-import { Helmet } from "react-helmet";
 
 const adminNavItems = [
   {
@@ -19,19 +20,25 @@ const adminNavItems = [
 
   {
     title: "All Products",
-    icons: <MdGridView className="mr-2" />,
+    icons: <AiOutlineProduct className="mr-2" />,
     link: "allProducts",
     path: "/adminDashboard/allProducts",
   },
   {
     title: "All Users",
-    icons: <MdGridView className="mr-2" />,
+    icons: <FaUsers className="mr-2" />,
     link: "allUsers",
     path: "/adminDashboard/allUsers",
   },
   {
+    title: "All Order",
+    icons: <BiBorderAll className="mr-2" />,
+    link: "adminOrder",
+    path: "/adminDashboard/adminOrder",
+  },
+  {
     title: "Profile Settings",
-    icons: <MdGridView className="mr-2" />,
+    icons: <FaRegUserCircle className="mr-2" />,
     link: "profileSettings",
     path: "/adminDashboard/profileSettings",
   },
@@ -53,7 +60,9 @@ const AdminDashboardLayout = () => {
   return (
     <div>
       <div className="min-h-screen flex flex-col">
-      <Helmet><title>RideOn Wheels | Admin Dashboard</title></Helmet>
+        <Helmet>
+          <title>RideOn Wheels | Admin Dashboard</title>
+        </Helmet>
         {/* Header */}
         <header className="bg-emerald-500 h-16 w-full flex items-center justify-between px-6 text-white shadow-md">
           <a
@@ -108,7 +117,6 @@ const AdminDashboardLayout = () => {
           </button>
           {/* User Avatar */}
           <div className="hidden lg:flex items-center space-x-4">
-     
             <span className="text-white font-semibold">{user?.email}</span>
           </div>
         </header>
