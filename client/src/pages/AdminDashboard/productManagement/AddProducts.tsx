@@ -22,7 +22,7 @@ export type TProduct = {
 
 const AddProducts = () => {
   const [image, setImage] = useState<File | null>(null);
-  const [addProduct] = useAddProductMutation();
+  const [addProduct,{isLoading}] = useAddProductMutation();
 
   const {
     register,
@@ -71,6 +71,9 @@ const AddProducts = () => {
     }
   };
 
+  if(isLoading){
+    return <h1>loading</h1>
+  }
   return (
     <section className="w-full">
       <div className="container mx-auto">

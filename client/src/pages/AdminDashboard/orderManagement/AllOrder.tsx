@@ -95,7 +95,10 @@ function AllOrder() {
           </tr>
           {orders?.map((item: any) => (
             <tr className="block border-b sm:table-row last:border-b-0 border-slate-200 sm:border-none">
-              <td className="before:w-24 before:inline-block before:font-medium before:text-slate-700  sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
+              <td
+              data-th="Transaction"
+              className="before:w-24 before:inline-block before:font-medium before:text-slate-700 
+               sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
                 {item?.transaction.id}
               </td>
               <td
@@ -111,13 +114,13 @@ function AllOrder() {
                 {item?.user?.email}
               </td>
               <td
-                data-th="Role"
+                data-th="Date"
                 className="before:w-24 before:inline-block before:font-medium before:text-slate-700 before:content-[attr(data-th)':'] sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
               >
                 {new Date(item?.createdAt).toLocaleDateString()}
               </td>
               <td
-                data-th="Role"
+                data-th="Total Price"
                 className="before:w-24 before:inline-block before:font-medium before:text-slate-700 before:content-[attr(data-th)':'] sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
               >
                 {item?.totalPrice}

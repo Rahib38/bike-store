@@ -1,36 +1,55 @@
 import { baseApi } from "@/Redux/Api/baseApi";
-import { TQueryParam, TResponseRedux } from "@/types";
-import { TAdminProduct } from "@/types/adminItem";
+import { IBikeResponse, TResponseRedux } from "@/types";
+
 
 const productManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-        if (args) {
-          args.forEach((item: TQueryParam) => {
-            params.append(item.name, item.value as string);
-          });
-        }
+      query: (
+        params: {
+          searchTerm?: string;
+          category?: string;
+          inStock?: string;
+          minPrice?: number;
+          maxPrice?: number;
+          limit?: number;
+          page?: number;
+        } = {}
+      ) => {
+        const queryParams = new URLSearchParams();
+
+        if (params.searchTerm)
+          queryParams.append("searchTerm", params.searchTerm);
+        if (params.category) queryParams.append("category", params.category);
+        if (params.inStock) queryParams.append("inStock", params.inStock);
+        if (params.minPrice)
+          queryParams.append("minPrice", params.minPrice.toString());
+        if (params.maxPrice)
+          queryParams.append("maxPrice", params.maxPrice.toString());
+        if (params.limit) queryParams.append("limit", params.limit.toString());
+        if (params.page) queryParams.append("page", params.page.toString());
+console.log(queryParams,params,"queryParams")
         return {
-          url: "/products",
+          url: `/products?${queryParams.toString()}`,
           method: "GET",
-          params: params,
         };
+        
       },
-      transformResponse: (response: TResponseRedux<TAdminProduct[]>) => {
-        console.log("inside redux", response);
-        return {
-          data: response.data,
-          meta: response.meta,
-        };
-      },
+      transformResponse: (response: TResponseRedux<IBikeResponse[]>) => (   
+      
+       { data: response?.data,
+        meta: response?.meta}
+        
+      ),
+      providesTags:["product"]
     }),
     singleProduct: builder.query({
       query: (id) => ({
         url: `/products/${id}`,
         method: "GET",
       }),
+      providesTags:["product"]
+
     }),
     addProduct: builder.mutation({
       query: (data) => ({
@@ -38,19 +57,25 @@ const productManagementApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["product"],
+
     }),
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/products/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["product"],
+
     }),
     updateProduct: builder.mutation({
-      query: ({data,id}) => ({
+      query: ({ data, id }) => ({
         url: `/products/${id}`,
         method: "PUT",
-        body:data
+        body: data,
       }),
+      invalidatesTags: ["product"],
+
     }),
   }),
 });
@@ -60,5 +85,5 @@ export const {
   useAddProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
-  useSingleProductQuery
+  useSingleProductQuery,
 } = productManagementApi;

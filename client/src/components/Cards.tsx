@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Card,
   CardContent,
@@ -6,15 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useGetAllProductsQuery } from "@/Redux/Features/Admin/adminManagement";
 import { Link } from "react-router-dom";
 
-const Cards = () => {
-  const { data: sProductData } = useGetAllProductsQuery(undefined);
+const Cards = ({ sProductData }: any) => {
+  // const { data: sProductData,isLoading } = useGetAllProductsQuery(undefined);
   console.log(sProductData);
 
   const productData = sProductData?.data?.map(
-    ({ _id, name, brand, price, quantity, category, description, image }) => ({
+    ({ _id, name, brand, price, quantity, category, description, image }:any) => ({
       _id: _id,
       name: name,
       brand: brand,
@@ -25,20 +25,18 @@ const Cards = () => {
       image: image,
     })
   );
-  console.log(productData);
+
+  // console.log(productData);
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 container mx-auto mt-8">
-      {productData?.map((item) => (
+      {productData?.map((item: any) => (
         <Card>
           <img src={item.image} alt="" />
           <CardHeader>
             <CardTitle>{item?.name}</CardTitle>
 
             <CardDescription className="font-bold">
-            
-              <span className=" font-semibold text-gray-800 mb-4">
-                Brand:
-              </span>
+              <span className=" font-semibold text-gray-800 mb-4">Brand:</span>
               {item?.brand}
             </CardDescription>
           </CardHeader>

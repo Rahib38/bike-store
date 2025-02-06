@@ -13,14 +13,14 @@ const getBikeIntoDB = async (query: Record<string, unknown>) => {
   const bikes =new QueryBuilder(BikeModel.find(), query)
     .search(searchableFields)
     .filter()
-    .sort();
-  // const bikes=await BikeModel.find()
-  // console.log(bikes);
+    .sort()
+    .paginate()
+    .fields()
 
   const result = await bikes.modelQuery
-  // console.log('Direct Query Result:', result);
+  const meta = await bikes.countTotal();
 
-  return result;
+  return {result,meta};
 };
 
 const singleBikeIntoDB = async (_id: string) => {
