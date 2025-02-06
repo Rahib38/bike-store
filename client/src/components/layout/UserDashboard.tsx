@@ -134,9 +134,9 @@ const UserDashboard = () => {
         <div className="flex flex-grow">
           {/* Sidebar */}
           <aside
-            className={`bg-emerald-600 text-white lg:static fixed top-0 left-0 z-20 transform ${
+            className={`bg-emerald-500 text-white lg:static fixed top-0 left-0 z-20 transform ${
               isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            } transition-transform duration-300 lg:translate-x-0 w-64 lg:w-auto min-h-screen flex flex-col space-y-6 py-6 px-4 shadow-lg`}
+            } transition-transform duration-300 lg:translate-x-0 w-64 lg:w-[300px] min-h-screen flex flex-col space-y-6 py-6 px-4 shadow-lg`}
           >
             <h2 className="text-lg font-semibold">Menu</h2>
             <ul className="space-y-4">
@@ -147,12 +147,12 @@ const UserDashboard = () => {
                     className={`flex items-center py-2 px-4 rounded-lg transition ${
                       location?.pathname === item?.path
                         ? "bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-lg scale-105" // Active
-                        : "hover:bg-emerald-500 hover:text-white"
+                        : "hover:bg-emerald-500 hover:text-white font-semibold"
                     }`}
                   >
                     <button className="flex items-center gap-2">
                       {item?.icons}
-                      <span className="font-medium">{item?.title}</span>
+                      <span className="font-semibold text-lg">{item?.title}</span>
                     </button>
                   </Link>
                 </li>

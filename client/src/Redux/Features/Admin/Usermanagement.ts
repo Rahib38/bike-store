@@ -7,12 +7,15 @@ const userApi = baseApi.injectEndpoints({
         url: "/admin/users",
         method: "GET",
       }),
+      providesTags:["allUser"]
     }),
     deactiveUsers: builder.mutation({
       query: (id) => ({
         url: `/admin/users/${id}/block`,
         method: "PATCH",
       }),
+      invalidatesTags:["allUser"]
+
     }),
   }),
 });

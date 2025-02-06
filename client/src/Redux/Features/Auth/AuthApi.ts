@@ -7,6 +7,7 @@ const authApi = baseApi.injectEndpoints({
         url: `/auth/user/${id}`,
         method: "GET",
       }),
+      providesTags:["user"]
     }),
     register: builder.mutation({
       query: (info) => ({
@@ -27,6 +28,7 @@ const authApi = baseApi.injectEndpoints({
         url: "/auth/logout",
         method: "POST",
       }),
+      invalidatesTags:['product','allUser','updateUserPass','order','revenue',"user"]
     }),
     updatePassword: builder.mutation({
       query: (data) => ({
@@ -34,6 +36,7 @@ const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
+
     }),
     userUpdate: builder.mutation({
       
@@ -44,6 +47,7 @@ const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags:["user"]
     }),
   }),
 });
