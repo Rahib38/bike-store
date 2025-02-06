@@ -31,7 +31,7 @@ const orderApi = baseApi.injectEndpoints({
           url: `/orders/verify?order_id=${id}`,
           method: "PATCH",
       }),
-      invalidatesTags:["order"]
+      invalidatesTags:["order",'product']
   }),
   }),
 });

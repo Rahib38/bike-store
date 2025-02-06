@@ -70,7 +70,7 @@ const CardDetails = () => {
               {singleProduct?.data?.quantity}
             </p>
             <p className="text-lg text-gray-700 mb-6">
-              {singleProduct?.data?.inStock ? "In stock" : "Out of stock"}
+              {singleProduct?.data?.inStock ? <Button className="bg-emerald-400 text-white">In stock</Button> : <Button className="bg-red-400 text-white">Out of stock</Button>}
             </p>
             <p className="text-lg text-gray-700 mb-6">
               <span className="text-xl font-semibold text-gray-800 mb-4">
@@ -84,11 +84,8 @@ const CardDetails = () => {
               </span>{" "}
               {singleProduct?.data?.category}
             </p>
-          </div>
-        </div>
-
-        {/* Add to Cart & Wishlist */}
-        <div className="flex items-center justify-between mt-8">
+            {singleProduct?.data?.inStock && 
+          <div className="flex items-center gap-8 ">
           <Button
             onClick={handleAddToCart}
             className="bg-emerald-500 text-white py-3 px-6 rounded-lg hover:bg-emerald-600 focus:outline-none"
@@ -107,6 +104,12 @@ const CardDetails = () => {
             </Button>
           </Link>
         </div>
+}
+          </div>
+        </div>
+
+        {/* Add to Cart & Wishlist */}
+     
       </div>
     </div>
   );
