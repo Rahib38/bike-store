@@ -17,6 +17,7 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import ImageUpload from "@/pages/ImageUpload";
 import Login from "@/pages/Login";
+import PaymentReturn from "@/pages/PaymentReturn";
 import Register from "@/pages/Register";
 import Service from "@/pages/Service";
 import DashboardProtected from "@/utils/DashboardProtected";
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/response",
+    element: <PaymentReturn />,
   },
   {
     path: "/adminDashboard",

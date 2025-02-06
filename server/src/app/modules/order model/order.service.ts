@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { StatusCodes } from 'http-status-codes';
 import AppError from '../../Errors/appError';
 import { BikeModel } from '../bike model/bike.model';
 import { TUser } from '../user/user.interface';
 import User from '../user/user.mode';
 import { orderModel } from './order.model';
 import { orderUtils } from './order.utills';
+import { Types } from 'mongoose';
 // const createOder = async (user:Tuser,order: Order,client_ip:string) => {
 
 //   const userData = await User.findById( user?._id );
@@ -175,6 +177,51 @@ const getadminAllOrder = async () => {
 
 const verifyPayment = async (order_id: string) => {
   const verifiedPayment = await orderUtils.verifyPaymentAsync(order_id);
+
+
+  if (verifiedPayment[0]?.customer_order_id) {
+    const findOrder = await orderModel.findById(
+      verifiedPayment[0]?.customer_order_id,
+    );
+    for (const item of findOrder?.products as {
+      product: Types.ObjectId;
+      quantity: number;
+    }[]) {
+      const bike = await BikeModel.findById(item.product);
+      if (!bike || bike.quantity < item.quantity) {
+        throw new AppError(StatusCodes.CONFLICT,`Not enough stock for ${bike?.name}`);
+      }
+
+      bike.quantity -= item.quantity;
+      if (bike.quantity === 0) {
+        bike.inStock = false;
+      }
+console.log(bike,'bike')
+      await bike.save();
+    }
+
+    //  try {
+    //   const updatePromises = findOrder?.products.map(async ({ product, quantity }) => {
+    //     const bike = await Bike.findById(product);
+
+    //     if (!bike) {
+    //       throw new Error(`Bike with ID ${product} not found`);
+    //     }
+
+    //     if (bike.quantity < quantity) {
+    //       throw new Error(`Not enough stock for bike: ${bike.name}`);
+    //     }
+
+    //     bike.quantity -= quantity;
+    //     await bike.save();
+    //   });
+
+    //   await Promise.all(updatePromises);
+    //   return { success: true, message: "Stock updated successfully" };
+    // } catch (error) {
+    //   throw new Error(error.message);
+    // }
+  }
 
   if (verifiedPayment?.length) {
     await orderModel.findOneAndUpdate(

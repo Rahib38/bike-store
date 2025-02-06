@@ -96,9 +96,10 @@ function AllOrder() {
           {orders?.map((item: any) => (
             <tr className="block border-b sm:table-row last:border-b-0 border-slate-200 sm:border-none">
               <td
-              data-th="Transaction"
-              className="before:w-24 before:inline-block before:font-medium before:text-slate-700 
-               sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
+                data-th="Transaction"
+                className="before:w-24 before:inline-block before:font-medium before:text-slate-700 
+               sm:before:content-none flex items-center sm:table-cell h-12 px-6 text-sm transition duration-300 sm:border-t sm:border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 "
+              >
                 {item?.transaction?.id}
               </td>
               <td
