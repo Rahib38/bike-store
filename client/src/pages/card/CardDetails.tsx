@@ -64,14 +64,13 @@ const CardDetails = () => {
               {singleProduct?.data?.description}
             </p>
             <p className="text-2xl font-semibold text-gray-800 mb-4">
-              Quantity{" "}
-            </p>
-            <p className="text-lg text-gray-700 mb-6">
+              <span className="text-xl font-semibold text-gray-800 mb-4">
+                Quantity:
+              </span>{" "}
               {singleProduct?.data?.quantity}
             </p>
-        
             <p className="text-lg text-gray-700 mb-6">
-              {singleProduct?.data?.inStock?"In stock":"Out of stock"}
+              {singleProduct?.data?.inStock ? "In stock" : "Out of stock"}
             </p>
             <p className="text-lg text-gray-700 mb-6">
               <span className="text-xl font-semibold text-gray-800 mb-4">
