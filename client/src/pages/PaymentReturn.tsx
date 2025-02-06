@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link, useSearchParams } from "react-router-dom";
 
 const PaymentReturn = () => {
@@ -9,11 +9,6 @@ const PaymentReturn = () => {
     <div>
       <div className="h-screen flex items-center justify-center bg-gray-100 text-gray-800">
         <Card className="w-96 shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-4xl font-bold text-center">
-              404
-            </CardTitle>
-          </CardHeader>
           <CardContent className="text-center">
             <h2 className="text-xl font-semibold mb-2">Order Create</h2>
             <p className="text-gray-600 mb-6">Your transaction ID is:</p>
