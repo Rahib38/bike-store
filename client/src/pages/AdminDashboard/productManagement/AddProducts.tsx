@@ -14,7 +14,7 @@ export type TProduct = {
   image: string;
   price: number;
   quantity: number;
-  type: string;
+  category: string;
   updatedAt: string;
   _id: string;
   totalQuantity?: number;
@@ -56,7 +56,7 @@ const AddProducts = () => {
         ...data,
         image: imageUrl,
       };
-
+console.log('mydata',productData)
       const result = await addProduct(productData);
 
       if ("error" in result) {
@@ -179,7 +179,7 @@ const AddProducts = () => {
                   <select
                     id="category"
                     className="peer relative h-10 w-full rounded border border-slate-200 bg-white px-4 text-sm text-slate-500 outline-none transition-all focus:border-emerald-500"
-                    {...register("type", { required: "Category is required" })}
+                    {...register("category", { required: "Category is required" })}
                   >
                     <option value="" disabled>
                       Select a category
@@ -189,9 +189,9 @@ const AddProducts = () => {
                     <option value="Hybrid">Hybrid</option>
                     <option value="Electric">Electric</option>
                   </select>
-                  {errors.type && (
+                  {errors.category && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.type.message}
+                      {errors.category.message}
                     </p>
                   )}
                 </div>

@@ -35,7 +35,7 @@ const bikeSchema = new Schema<Bike>(
     description: {
       type: String,
       required: [true, 'Description is required'],
-      minlength: [10, 'Description must be at least 10 characters long'],
+      minlength: [1, 'Description must be at least 10 characters long'],
       maxlength: [500, 'Description cannot exceed 500 characters'],
       trim: true,
     },

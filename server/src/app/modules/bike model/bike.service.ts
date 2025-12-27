@@ -3,7 +3,9 @@ import { Bike } from './bike.interface';
 import { BikeModel } from './bike.model';
 
 const createBikeIntoDB = async (bike: Bike) => {
-  const result = await BikeModel.create(bike);
+  console.log('=================',bike)
+  const result = await BikeModel.create( {...bike});
+  console.log('test',result)
   return result;
 };
 
