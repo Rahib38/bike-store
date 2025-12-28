@@ -1,5 +1,5 @@
 import Imtiaz from "../assets/Imtiaz.jpg";
-import Tanjid from "../assets/tanjid.jpg";
+import Tanjid from "../assets/Tanjid.jpg";
 import Nadim from "../assets/Nadim.jpg";
 import Mehedi from "../assets/Mehedi.jpg";
 import Ridoy from "../assets/Ridoy.jpg";
