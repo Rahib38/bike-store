@@ -42,20 +42,20 @@ const teamMembers = [
     bio: "An experienced team leader responsible for guiding the team, assigning tasks, and ensuring smooth collaboration across all stages of development. Plays a key role in decision-making, problem-solving, and maintaining team motivation while ensuring project goals are met on time with quality.",
     image: Ridoy,
   },
-  {
-    name: "Imtiyaz Siddique",
-    role: "Team Leader",
-    roll: "683327",
-    bio: "An experienced team leader responsible for guiding the team, assigning tasks, and ensuring smooth collaboration across all stages of development. Plays a key role in decision-making, problem-solving, and maintaining team motivation while ensuring project goals are met on time with quality.",
-    image: Imtiaz,
-  },
-  {
-    name: "Imtiyaz Siddique",
-    role: "Team Leader",
-    roll: "683327",
-    bio: "An experienced team leader responsible for guiding the team, assigning tasks, and ensuring smooth collaboration across all stages of development. Plays a key role in decision-making, problem-solving, and maintaining team motivation while ensuring project goals are met on time with quality.",
-    image: Imtiaz,
-  },
+  // {
+  //   name: "Imtiyaz Siddique",
+  //   role: "Team Leader",
+  //   roll: "683327",
+  //   bio: "An experienced team leader responsible for guiding the team, assigning tasks, and ensuring smooth collaboration across all stages of development. Plays a key role in decision-making, problem-solving, and maintaining team motivation while ensuring project goals are met on time with quality.",
+  //   image: Imtiaz,
+  // },
+  // {
+  //   name: "Imtiyaz Siddique",
+  //   role: "Team Leader",
+  //   roll: "683327",
+  //   bio: "An experienced team leader responsible for guiding the team, assigning tasks, and ensuring smooth collaboration across all stages of development. Plays a key role in decision-making, problem-solving, and maintaining team motivation while ensuring project goals are met on time with quality.",
+  //   image: Imtiaz,
+  // },
 ];
 
 export default function TeamMember() {
