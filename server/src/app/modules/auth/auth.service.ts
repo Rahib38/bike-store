@@ -1,4 +1,5 @@
-import { Tuser } from '@/components/ProfileDropDown';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 
@@ -66,7 +67,7 @@ const login = async (payload: { email: string; password: string }) => {
   // return {token, user};
 };
 
-const updateUser= async(_id:string,user:Tuser)=>{
+const updateUser= async(_id:string,user:any)=>{
   console.log('object',_id,user)
 const result = await User.findByIdAndUpdate(_id,user,{new:true})
 return result

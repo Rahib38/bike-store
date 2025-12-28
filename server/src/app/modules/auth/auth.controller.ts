@@ -41,7 +41,8 @@ const login = catchAsync(async (req: Request, res: Response) => {
 });
 
 const updateUser =catchAsync(async(req:Request,res:Response)=>{
- const {_id}=req.user
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ const _id =(req.user as any)._id
  console.log('id',req.user)
   const body=req.body
   const result= await AuthService.updateUser(_id,body)

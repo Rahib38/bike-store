@@ -19,7 +19,6 @@ const blockUser = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const result = await AdminService.blockUser(userId);
   sendResponse(res, {
-    success: true,
     message: 'user blocked successfully',
     statusCode: StatusCodes.OK,
     data: result,
