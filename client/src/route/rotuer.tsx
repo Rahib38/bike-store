@@ -20,6 +20,7 @@ import Login from "@/pages/Login";
 import PaymentReturn from "@/pages/PaymentReturn";
 import Register from "@/pages/Register";
 import Service from "@/pages/Service";
+import TeamMember from "@/pages/TeamMember";
 import DashboardProtected from "@/utils/DashboardProtected";
 import ProtectedRoutes from "@/utils/ProtectedRoutes";
 import { createBrowserRouter } from "react-router-dom";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/service",
         element: <Service></Service>,
+      },
+      {
+        path: "/member",
+        element: <TeamMember/>,
       },
       {
         path: "/cardDetails/:id",

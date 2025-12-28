@@ -1,0 +1,16 @@
+NODE_ENV=development
+PORT=5001
+DATABASE_URL=mongodb+srv://nadimulrahib38:Rahib38@bike-store.zle5m5u.mongodb.net/bike-store?appName=bike-store
+BCRYPT_SALT_ROUNDS=10
+
+JWT_ACCESS_SECRET=access_secret_123456
+JWT_ACCESS_EXPIRES_IN=1d
+
+JWT_REFRESH_SECRET=refresh_secret_123456
+JWT_REFRESH_EXPIRES_IN=7d
+
+SP_ENDPOINT=https://sandbox.shurjopay.com
+SP_USERNAME=sp_sandbox_user
+SP_PASSWORD=sp_sandbox_pass
+SP_PREFIX=SP
+SP_RETURN_URL=http://localhost:5001/api/payment/response
