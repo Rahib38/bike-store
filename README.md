@@ -71,5 +71,5 @@ This project is **MIT Licensed**. Feel free to use and modify it as needed.
 
 ---
 
-🚀 **Enjoy smooth bike rentals with RideOn Wheels!** 🏍️
+🚀 **Enjoy smooth bike rentals with RideOn Wheels!** 🏍️ 
 
