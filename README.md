@@ -55,7 +55,7 @@
 ---
 
 ## 🌍 LIVE DEMO
-🔗 [Live Link](https://bike-shop-gamma.vercel.app) *(Replace with actual link)*
+🔗 [Live Link](https://bike-store-liart-seven.vercel.app) *(Replace with actual link)*
 
 ---
 
