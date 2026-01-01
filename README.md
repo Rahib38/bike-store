@@ -37,7 +37,7 @@
    git clone https://github.com/Rahib38/bike-store.git
 ```
 
-### 📌 NAVIGATE TO THE PROJECT DIRECTORY
+### 📌 NAVIGATE TO THE PROJECT the DIRECTORY
 ```bash
  cd rideon-wheels  
 ```
